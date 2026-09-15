@@ -1,0 +1,26 @@
+{
+  "author_period_count": 66,
+  "author_period_schema_version": "1.0.0",
+  "author_periods_digest": "93a538d5c3f89ae96c65b77c1d7cbaafea656aad31f966af0b36f26247296f0e",
+  "dataset_version": "1.0.0",
+  "evidence_count": 118242,
+  "generated_at": "2026-09-14T04:01:48.841621+00:00",
+  "index_path": "generated\\semantic_index.sqlite",
+  "kb_builder_version": "2026-09-13.author-role-separation",
+  "kb_dir": "..\\knowledge_base",
+  "kb_generated_at": "2026-09-12T23:41:40-07:00",
+  "kb_schema_version": "3.2.0",
+  "layer": "primary",
+  "morphology_config_digest": "cc2300c09e0c9a14882f7303291347e8fa7177c3172b1475acd77bbbdefe2bfd",
+  "morphology_form_count": 31,
+  "morphology_match_count": 326782,
+  "morphology_schema_version": "1.0.0",
+  "policy": {
+    "ai_models_used": false,
+    "embeddings_used": false,
+    "generated_theological_conclusions": false,
+    "source_faithful_kb_modified": false
+  },
+  "semantic_index_schema_version": "1.5.0",
+  "term_count": 882
+}

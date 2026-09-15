@@ -1,0 +1,1025 @@
+THEOLOGIA SEARCH CATALOG
+================================================================================
+
+This catalog is generated from generated/semantic_index.sqlite.
+It lists the indexed author metadata and source volumes available to search.
+
+STATISTICS
+--------------------------------------------------------------------------------
+Authors (author-period records): 66
+Distinct authors appearing on evidence rows: 59
+Indexed source volumes: 287
+Source volumes with evidence: 277
+Evidence records: 118242
+Registered search terms: 882
+Morphology forms: 31
+Morphology evidence matches: 326782
+Mentioned-author evidence links: 5061
+Distinct mentioned authors: 60
+
+EVIDENCE BY HISTORICAL PERIOD
+--------------------------------------------------------------------------------
+Before Council of Nicaea (up to 325 AD): 2822
+After Council of Nicaea, before Reformation (326-1516 AD): 26355
+After Reformation (1517 AD and later): 89065
+
+AUTHORS
+--------------------------------------------------------------------------------
+Alexander of Cappadocia | Before Council of Nicaea (up to 325 AD) | d. 251 | confidence: medium
+  Notes: Usually identified with Alexander of Jerusalem.
+Anatolius | Before Council of Nicaea (up to 325 AD) | d. 283 | confidence: medium
+  Notes: Patristic fragment author, usually Anatolius of Laodicea.
+Arnobius | Before Council of Nicaea (up to 325 AD) | b. 255, d. 327 | confidence: medium
+  Notes: Active before Nicaea; death date sometimes placed shortly after 325.
+Asterius Urbanus | Before Council of Nicaea (up to 325 AD) | dates not recorded | confidence: medium
+  Notes: Anti-Montanist writer normally placed before Nicaea.
+Athenagoras | Before Council of Nicaea (up to 325 AD) | b. 133, d. 190 | confidence: medium
+  Notes: Usually Athenagoras of Athens.
+Barnabas | Before Council of Nicaea (up to 325 AD) | d. 61 | confidence: medium
+  Notes: Apostolic-era attribution.
+Clement of Rome | Before Council of Nicaea (up to 325 AD) | b. 35, d. 99 | confidence: high
+  Notes: Apostolic Father.
+Commodianus | Before Council of Nicaea (up to 325 AD) | dates not recorded | confidence: medium
+  Notes: Normally placed in the third century.
+Cyprian of Carthage | Before Council of Nicaea (up to 325 AD) | b. 200, d. 258 | confidence: high
+  Notes: Author date lookup.
+Dionysius of Alexandria | Before Council of Nicaea (up to 325 AD) | d. 264 | confidence: high
+  Notes: Third-century bishop.
+Gregory Thaumaturgus | Before Council of Nicaea (up to 325 AD) | b. 213, d. 270 | confidence: high
+  Notes: Third-century Father.
+Hermas | Before Council of Nicaea (up to 325 AD) | dates not recorded | confidence: medium
+  Notes: Shepherd of Hermas tradition, second century.
+Hippolytus of Rome | Before Council of Nicaea (up to 325 AD) | b. 170, d. 235 | confidence: high
+  Notes: Author date lookup.
+Ignatius of Antioch | Before Council of Nicaea (up to 325 AD) | b. 35, d. 108 | confidence: high
+  Notes: Apostolic Father.
+Irenaeus of Lyons | Before Council of Nicaea (up to 325 AD) | b. 130, d. 202 | confidence: high
+  Notes: Second-century Father.
+Julius Africanus | Before Council of Nicaea (up to 325 AD) | b. 160, d. 240 | confidence: medium
+  Notes: Sextus Julius Africanus.
+Justin Martyr | Before Council of Nicaea (up to 325 AD) | b. 100, d. 165 | confidence: high
+  Notes: Second-century apologist.
+Lactantius | Before Council of Nicaea (up to 325 AD) | b. 250, d. 325 | confidence: high
+  Notes: Assigned to pre-Nicene because boundary includes 325 AD.
+Mathetes | Before Council of Nicaea (up to 325 AD) | dates not recorded | confidence: medium
+  Notes: Epistle to Diognetus attribution, usually second century.
+Methodius | Before Council of Nicaea (up to 325 AD) | d. 311 | confidence: medium
+  Notes: Usually Methodius of Olympus.
+Minucius Felix | Before Council of Nicaea (up to 325 AD) | dates not recorded | confidence: medium
+  Notes: Latin apologist usually placed around the second or third century.
+Novatian | Before Council of Nicaea (up to 325 AD) | b. 200, d. 258 | confidence: high
+  Notes: Third-century theologian.
+Origen | Before Council of Nicaea (up to 325 AD) | b. 185, d. 253 | confidence: high
+  Notes: Third-century theologian.
+Papias | Before Council of Nicaea (up to 325 AD) | b. 60, d. 130 | confidence: medium
+  Notes: Usually Papias of Hierapolis.
+Polycarp | Before Council of Nicaea (up to 325 AD) | b. 69, d. 155 | confidence: high
+  Notes: Apostolic Father.
+Tatian | Before Council of Nicaea (up to 325 AD) | b. 120, d. 180 | confidence: medium
+  Notes: Second-century Christian writer.
+Tertullian | Before Council of Nicaea (up to 325 AD) | b. 155, d. 220 | confidence: high
+  Notes: Pre-Nicene Latin theologian.
+Theophilus of Antioch | Before Council of Nicaea (up to 325 AD) | d. 183 | confidence: high
+  Notes: Second-century bishop and apologist.
+Venantius | Before Council of Nicaea (up to 325 AD) | dates not recorded | confidence: low
+  Notes: One-name ANF author; manually kept pre-Nicene unless source metadata is refined.
+Victorinus | Before Council of Nicaea (up to 325 AD) | d. 304 | confidence: medium
+  Notes: Usually Victorinus of Pettau in patristic collections.
+Ambrose of Milan | After Council of Nicaea, before Reformation (326-1516 AD) | b. 339, d. 397 | confidence: high
+  Notes: Author date lookup.
+Athanasius of Alexandria | After Council of Nicaea, before Reformation (326-1516 AD) | b. 296, d. 373 | confidence: high
+  Notes: Author date lookup.
+Augustine of Hippo | After Council of Nicaea, before Reformation (326-1516 AD) | b. 354, d. 430 | confidence: high
+  Notes: Author date lookup.
+Basil of Caesarea | After Council of Nicaea, before Reformation (326-1516 AD) | b. 330, d. 379 | confidence: high
+  Notes: Cappadocian Father.
+Cyril of Jerusalem | After Council of Nicaea, before Reformation (326-1516 AD) | b. 313, d. 386 | confidence: high
+  Notes: Author date lookup.
+Ephraim the Syrian | After Council of Nicaea, before Reformation (326-1516 AD) | b. 306, d. 373 | confidence: high
+  Notes: Author date lookup.
+Eusebius of Caesarea | After Council of Nicaea, before Reformation (326-1516 AD) | b. 260, d. 340 | confidence: high
+  Notes: Author spans the Nicene boundary; assigned by death/era.
+Gregory Nazianzen | After Council of Nicaea, before Reformation (326-1516 AD) | b. 329, d. 390 | confidence: high
+  Notes: Also Gregory of Nazianzus.
+Gregory of Nyssa | After Council of Nicaea, before Reformation (326-1516 AD) | b. 335, d. 395 | confidence: high
+  Notes: Cappadocian Father.
+Gregory the Great | After Council of Nicaea, before Reformation (326-1516 AD) | b. 540, d. 604 | confidence: high
+  Notes: Author date lookup.
+Hilary of Poitiers | After Council of Nicaea, before Reformation (326-1516 AD) | b. 310, d. 367 | confidence: high
+  Notes: Author date lookup.
+Jerome | After Council of Nicaea, before Reformation (326-1516 AD) | b. 342, d. 420 | confidence: high
+  Notes: Latin Father.
+John Cassian | After Council of Nicaea, before Reformation (326-1516 AD) | b. 360, d. 435 | confidence: high
+  Notes: Late antique monastic writer.
+John Chrysostom | After Council of Nicaea, before Reformation (326-1516 AD) | b. 347, d. 407 | confidence: high
+  Notes: Greek Father.
+John of Damascus | After Council of Nicaea, before Reformation (326-1516 AD) | b. 675, d. 749 | confidence: high
+  Notes: Medieval Greek theologian.
+Leo the Great | After Council of Nicaea, before Reformation (326-1516 AD) | b. 400, d. 461 | confidence: high
+  Notes: Pope Leo I.
+Rufinus | After Council of Nicaea, before Reformation (326-1516 AD) | b. 344, d. 411 | confidence: medium
+  Notes: Usually Rufinus of Aquileia.
+Socrates Scholasticus | After Council of Nicaea, before Reformation (326-1516 AD) | b. 380, d. 440 | confidence: high
+  Notes: Church historian.
+Sozomen | After Council of Nicaea, before Reformation (326-1516 AD) | b. 400, d. 450 | confidence: high
+  Notes: Church historian.
+Sulpitius Severus | After Council of Nicaea, before Reformation (326-1516 AD) | b. 363, d. 425 | confidence: high
+  Notes: Late antique Christian writer.
+Theodoret | After Council of Nicaea, before Reformation (326-1516 AD) | b. 393, d. 458 | confidence: high
+  Notes: Usually Theodoret of Cyrus.
+Thomas Aquinas | After Council of Nicaea, before Reformation (326-1516 AD) | b. 1225, d. 1274 | confidence: high
+  Notes: Medieval scholastic theologian.
+Abraham Kuyper | After Reformation (1517 AD and later) | b. 1837, d. 1920 | confidence: high
+  Notes: Author date lookup; post-Reformation writer.
+Charles Haddon Spurgeon | After Reformation (1517 AD and later) | b. 1834, d. 1892 | confidence: high
+  Notes: Author date lookup.
+Charles Hodge | After Reformation (1517 AD and later) | b. 1797, d. 1878 | confidence: high
+  Notes: Author date lookup.
+Herman Bavinck | After Reformation (1517 AD and later) | b. 1854, d. 1921 | confidence: high
+  Notes: Author date lookup.
+John Bunyan | After Reformation (1517 AD and later) | b. 1628, d. 1688 | confidence: high
+  Notes: Post-Reformation writer.
+John Calvin | After Reformation (1517 AD and later) | b. 1509, d. 1564 | confidence: high
+  Notes: Reformation writer; assigned by active/death year.
+John Charles Ryle | After Reformation (1517 AD and later) | b. 1816, d. 1900 | confidence: high
+  Notes: Post-Reformation Anglican writer.
+John Henry Newman | After Reformation (1517 AD and later) | b. 1801, d. 1890 | confidence: high
+  Notes: Post-Reformation writer.
+John Owen | After Reformation (1517 AD and later) | b. 1616, d. 1683 | confidence: high
+  Notes: Post-Reformation Puritan writer.
+John Wesley | After Reformation (1517 AD and later) | b. 1703, d. 1791 | confidence: high
+  Notes: Post-Reformation Methodist writer.
+Jonathan Edwards | After Reformation (1517 AD and later) | b. 1703, d. 1758 | confidence: high
+  Notes: Post-Reformation writer.
+Louis Berkhof | After Reformation (1517 AD and later) | b. 1873, d. 1957 | confidence: high
+  Notes: Post-Reformation systematic theologian.
+Martin Luther | After Reformation (1517 AD and later) | b. 1483, d. 1546 | confidence: high
+  Notes: Reformation begins in 1517; assigned by active year.
+Philip Schaff | After Reformation (1517 AD and later) | b. 1819, d. 1893 | confidence: high
+  Notes: Modern editor/historian; assigned by author date.
+
+BOOK VOLUMES
+--------------------------------------------------------------------------------
+Calvinism: Six Stone-lectures | Collection: Abraham Kuyper | Evidence records: 6
+  Source ID: ABRAHAM_KUYPER_LECTURE
+  Original file: raw_documents/Abraham Kuyper/lecture.pdf
+The Ascent of the Son--The Descent of the Spirit: Kuyper Meditations | Collection: Abraham Kuyper | Evidence records: 77
+  Source ID: ABRAHAM_KUYPER_ASCENTOFCHRIST
+  Original file: raw_documents/Abraham Kuyper/ascentofchrist.pdf
+The Mystery of Islam | Collection: Abraham Kuyper | Evidence records: 40
+  Source ID: ABRAHAM_KUYPER_ISLAM
+  Original file: raw_documents/Abraham Kuyper/islam.pdf
+The Work of the Holy Spirit | Collection: Abraham Kuyper | Evidence records: 349
+  Source ID: ABRAHAM_KUYPER_HOLY_SPIRIT
+  Original file: raw_documents/Abraham Kuyper/holy_spirit.pdf
+To Be Near Unto God | Collection: Abraham Kuyper | Evidence records: 259
+  Source ID: ABRAHAM_KUYPER_NEAR
+  Original file: raw_documents/Abraham Kuyper/near.pdf
+You Can Do Greater Things Than Christ | Collection: Abraham Kuyper | Evidence records: 59
+  Source ID: ABRAHAM_KUYPER_GREATER
+  Original file: raw_documents/Abraham Kuyper/greater.pdf
+ANF01. The Apostolic Fathers with Justin Martyr and Irenaeus | Collection: Ante-Nicene Fathers | Evidence records: 125
+  Source ID: ANF_01
+  Original file: raw_documents/Ante-Nicene Fathers/anf01.pdf
+ANF02. Fathers of the Second Century: Hermas, Tatian, Athenagoras, Theophilus, and Clement of Alexandria (Entire) | Collection: Ante-Nicene Fathers | Evidence records: 8
+  Source ID: ANF_02
+  Original file: raw_documents/Ante-Nicene Fathers/anf02.pdf
+ANF03. Latin Christianity: Its Founder, Tertullian | Collection: Ante-Nicene Fathers | Evidence records: 1480
+  Source ID: ANF_03
+  Original file: raw_documents/Ante-Nicene Fathers/anf03.pdf
+ANF04. Fathers of the Third Century: Tertullian, Part Fourth; Minucius Felix; Commodian; Origen, Parts First and Second | Collection: Ante-Nicene Fathers | Evidence records: 4
+  Source ID: ANF_04
+  Original file: raw_documents/Ante-Nicene Fathers/anf04.pdf
+ANF05. Fathers of the Third Century: Hippolytus, Cyprian, Caius, Novatian, Appendix | Collection: Ante-Nicene Fathers | Evidence records: 1001
+  Source ID: ANF_05
+  Original file: raw_documents/Ante-Nicene Fathers/anf05.pdf
+ANF06. Fathers of the Third Century: Gregory Thaumaturgus, Dionysius the Great, Julius Africanus, Anatolius, and Minor Writers, Methodius, Arnobius | Collection: Ante-Nicene Fathers | Evidence records: 5
+  Source ID: ANF_06
+  Original file: raw_documents/Ante-Nicene Fathers/anf06.pdf
+ANF07. Fathers of the Third and Fourth Centuries: Lactantius, Venantius, Asterius, Victorinus, Dionysius, Apostolic Teaching and Constitutions, Homily, and Liturgies | Collection: Ante-Nicene Fathers | Evidence records: 26
+  Source ID: ANF_07
+  Original file: raw_documents/Ante-Nicene Fathers/anf07.pdf
+ANF08. The Twelve Patriarchs, Excerpts and Epistles, The Clementia, Apocrypha, Decretals, Memoirs of Edessa and Syriac Documents, Remains of the First Age | Collection: Ante-Nicene Fathers | Evidence records: 26
+  Source ID: ANF_08
+  Original file: raw_documents/Ante-Nicene Fathers/anf08.pdf
+ANF09. The Gospel of Peter, The Diatessaron of Tatian, The Apocalypse of Peter, the Vision of Paul, The Apocalypse of the Virgin and Sedrach, The Testament of Abraham, The Acts of Xanthippe and Polyxena, The Narrative of Zosimus, The Apology of Aristides, The Epistles of Clement (complete text), Origen’s Commentary on John, Books 1–10, and Commentary on Matthew, Books 1, 2, and 10–14. | Collection: Ante-Nicene Fathers | Evidence records: 89
+  Source ID: ANF_09
+  Original file: raw_documents/Ante-Nicene Fathers/anf09.pdf
+ANF10. Bibliographic Synopsis; General Index | Collection: Ante-Nicene Fathers | Evidence records: 0
+  Source ID: ANF_10
+  Original file: raw_documents/Ante-Nicene Fathers/anf10.pdf
+A Puritan Catechism | Collection: Charles Haddon Spurgeon | Evidence records: 5
+  Source ID: CHARLES_HADDON_SPURGEON_CATECHISM
+  Original file: raw_documents/Charles Haddon Spurgeon/catechism.pdf
+All of Grace | Collection: Charles Haddon Spurgeon | Evidence records: 48
+  Source ID: CHARLES_HADDON_SPURGEON_GRACE
+  Original file: raw_documents/Charles Haddon Spurgeon/grace.pdf
+Commenting and Commentaries | Collection: Charles Haddon Spurgeon | Evidence records: 26
+  Source ID: CHARLES_HADDON_SPURGEON_COMMENT
+  Original file: raw_documents/Charles Haddon Spurgeon/comment.pdf
+Faith's Checkbook | Collection: Charles Haddon Spurgeon | Evidence records: 95
+  Source ID: CHARLES_HADDON_SPURGEON_CHECKBOOK
+  Original file: raw_documents/Charles Haddon Spurgeon/checkbook.pdf
+Morning and Evening: Daily Readings | Collection: Charles Haddon Spurgeon | Evidence records: 745
+  Source ID: CHARLES_HADDON_SPURGEON_MORNEVE
+  Original file: raw_documents/Charles Haddon Spurgeon/morneve.pdf
+Sermons on Proverbs | Collection: Charles Haddon Spurgeon | Evidence records: 429
+  Source ID: CHARLES_HADDON_SPURGEON_PROVERBS
+  Original file: raw_documents/Charles Haddon Spurgeon/proverbs.pdf
+Spurgeon's Sermons Volume 01: 1855 | Collection: Charles Haddon Spurgeon | Evidence records: 508
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS01
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons01.pdf
+Spurgeon's Sermons Volume 02: 1856 | Collection: Charles Haddon Spurgeon | Evidence records: 490
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS02
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons02.pdf
+Spurgeon's Sermons Volume 03: 1857 | Collection: Charles Haddon Spurgeon | Evidence records: 536
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS03
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons03.pdf
+Spurgeon's Sermons Volume 04: 1858 | Collection: Charles Haddon Spurgeon | Evidence records: 599
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS04
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons04.pdf
+Spurgeon's Sermons Volume 05: 1859 | Collection: Charles Haddon Spurgeon | Evidence records: 603
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS05
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons05.pdf
+Spurgeon's Sermons Volume 06: 1860 | Collection: Charles Haddon Spurgeon | Evidence records: 637
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS06
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons06.pdf
+Spurgeon's Sermons Volume 07: 1861 | Collection: Charles Haddon Spurgeon | Evidence records: 739
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS07
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons07.pdf
+Spurgeon's Sermons Volume 08: 1862 | Collection: Charles Haddon Spurgeon | Evidence records: 632
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS08
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons08.pdf
+Spurgeon's Sermons Volume 09: 1863 | Collection: Charles Haddon Spurgeon | Evidence records: 672
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS09
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons09.pdf
+Spurgeon's Sermons Volume 10: 1864 | Collection: Charles Haddon Spurgeon | Evidence records: 669
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS10
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons10.pdf
+Spurgeon's Sermons Volume 11: 1865 | Collection: Charles Haddon Spurgeon | Evidence records: 675
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS11
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons11.pdf
+Spurgeon's Sermons Volume 12: 1866 | Collection: Charles Haddon Spurgeon | Evidence records: 657
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS12
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons12.pdf
+Spurgeon's Sermons Volume 13: 1867 | Collection: Charles Haddon Spurgeon | Evidence records: 635
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS13
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons13.pdf
+Spurgeon's Sermons Volume 14: 1868 | Collection: Charles Haddon Spurgeon | Evidence records: 594
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS14
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons14.pdf
+Spurgeon's Sermons Volume 15: 1869 | Collection: Charles Haddon Spurgeon | Evidence records: 611
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS15
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons15.pdf
+Spurgeon's Sermons Volume 16: 1870 | Collection: Charles Haddon Spurgeon | Evidence records: 630
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS16
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons16.pdf
+Spurgeon's Sermons Volume 17: 1871 | Collection: Charles Haddon Spurgeon | Evidence records: 677
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS17
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons17.pdf
+Spurgeon's Sermons Volume 18: 1872 | Collection: Charles Haddon Spurgeon | Evidence records: 674
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS18
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons18.pdf
+Spurgeon's Sermons Volume 19: 1873 | Collection: Charles Haddon Spurgeon | Evidence records: 634
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS19
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons19.pdf
+Spurgeon's Sermons Volume 20: 1874 | Collection: Charles Haddon Spurgeon | Evidence records: 656
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS20
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons20.pdf
+Spurgeon's Sermons Volume 21: 1875 | Collection: Charles Haddon Spurgeon | Evidence records: 651
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS21
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons21.pdf
+Spurgeon's Sermons Volume 22: 1876 | Collection: Charles Haddon Spurgeon | Evidence records: 682
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS22
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons22.pdf
+Spurgeon's Sermons Volume 23: 1877 | Collection: Charles Haddon Spurgeon | Evidence records: 657
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS23
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons23.pdf
+Spurgeon's Sermons Volume 24: 1878 | Collection: Charles Haddon Spurgeon | Evidence records: 674
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS24
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons24.pdf
+Spurgeon's Sermons Volume 25: 1879 | Collection: Charles Haddon Spurgeon | Evidence records: 668
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS25
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons25.pdf
+Spurgeon's Sermons Volume 26: 1880 | Collection: Charles Haddon Spurgeon | Evidence records: 653
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS26
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons26.pdf
+Spurgeon's Sermons Volume 27: 1881 | Collection: Charles Haddon Spurgeon | Evidence records: 678
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS27
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons27.pdf
+Spurgeon's Sermons Volume 28: 1882 | Collection: Charles Haddon Spurgeon | Evidence records: 649
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS28
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons28.pdf
+Spurgeon's Sermons Volume 29: 1883 | Collection: Charles Haddon Spurgeon | Evidence records: 666
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS29
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons29.pdf
+Spurgeon's Sermons Volume 30: 1884 | Collection: Charles Haddon Spurgeon | Evidence records: 643
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS30
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons30.pdf
+Spurgeon's Sermons Volume 31: 1885 | Collection: Charles Haddon Spurgeon | Evidence records: 643
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS31
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons31.pdf
+Spurgeon's Sermons Volume 32: 1886 | Collection: Charles Haddon Spurgeon | Evidence records: 645
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS32
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons32.pdf
+Spurgeon's Sermons Volume 33: 1887 | Collection: Charles Haddon Spurgeon | Evidence records: 679
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS33
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons33.pdf
+Spurgeon's Sermons Volume 34: 1888 | Collection: Charles Haddon Spurgeon | Evidence records: 623
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS34
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons34.pdf
+Spurgeon's Sermons Volume 35: 1889 | Collection: Charles Haddon Spurgeon | Evidence records: 604
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS35
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons35.pdf
+Spurgeon's Sermons Volume 36: 1890 | Collection: Charles Haddon Spurgeon | Evidence records: 618
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS36
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons36.pdf
+Spurgeon's Sermons Volume 37: 1891 | Collection: Charles Haddon Spurgeon | Evidence records: 591
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS37
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons37.pdf
+Spurgeon's Sermons Volume 38: 1892 | Collection: Charles Haddon Spurgeon | Evidence records: 530
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS38
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons38.pdf
+Spurgeon's Sermons Volume 39: 1893 | Collection: Charles Haddon Spurgeon | Evidence records: 561
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS39
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons39.pdf
+Spurgeon's Sermons Volume 40: 1894 | Collection: Charles Haddon Spurgeon | Evidence records: 562
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS40
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons40.pdf
+Spurgeon's Sermons Volume 41: 1895 | Collection: Charles Haddon Spurgeon | Evidence records: 558
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS41
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons41.pdf
+Spurgeon's Sermons Volume 42: 1896 | Collection: Charles Haddon Spurgeon | Evidence records: 567
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS42
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons42.pdf
+Spurgeon's Sermons Volume 43: 1897 | Collection: Charles Haddon Spurgeon | Evidence records: 589
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS43
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons43.pdf
+Spurgeon's Sermons Volume 44: 1898 | Collection: Charles Haddon Spurgeon | Evidence records: 561
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS44
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons44.pdf
+Spurgeon's Sermons Volume 45: 1899 | Collection: Charles Haddon Spurgeon | Evidence records: 577
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS45
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons45.pdf
+Spurgeon's Sermons Volume 46: 1900 | Collection: Charles Haddon Spurgeon | Evidence records: 549
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS46
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons46.pdf
+Spurgeon's Sermons Volume 47: 1901 | Collection: Charles Haddon Spurgeon | Evidence records: 550
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS47
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons47.pdf
+Spurgeon's Sermons Volume 48: 1902 | Collection: Charles Haddon Spurgeon | Evidence records: 555
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS48
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons48.pdf
+Spurgeon's Sermons Volume 49: 1903 | Collection: Charles Haddon Spurgeon | Evidence records: 544
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS49
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons49.pdf
+Spurgeon's Sermons Volume 50: 1904 | Collection: Charles Haddon Spurgeon | Evidence records: 555
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS50
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons50.pdf
+Spurgeon's Sermons Volume 51: 1905 | Collection: Charles Haddon Spurgeon | Evidence records: 552
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS51
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons51.pdf
+Spurgeon's Sermons Volume 52: 1906 | Collection: Charles Haddon Spurgeon | Evidence records: 539
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS52
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons52.pdf
+Spurgeon's Sermons Volume 53: 1907 | Collection: Charles Haddon Spurgeon | Evidence records: 536
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS53
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons53.pdf
+Spurgeon's Sermons Volume 54: 1908 | Collection: Charles Haddon Spurgeon | Evidence records: 533
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS54
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons54.pdf
+Spurgeon's Sermons Volume 55: 1909 | Collection: Charles Haddon Spurgeon | Evidence records: 548
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS55
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons55.pdf
+Spurgeon's Sermons Volume 56: 1910 | Collection: Charles Haddon Spurgeon | Evidence records: 526
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS56
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons56.pdf
+Spurgeon's Sermons Volume 57: 1911 | Collection: Charles Haddon Spurgeon | Evidence records: 498
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS57
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons57.pdf
+Spurgeon's Sermons Volume 58: 1912 | Collection: Charles Haddon Spurgeon | Evidence records: 516
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS58
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons58.pdf
+Spurgeon's Sermons Volume 59: 1913 | Collection: Charles Haddon Spurgeon | Evidence records: 518
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS59
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons59.pdf
+Spurgeon's Sermons Volume 60: 1914 | Collection: Charles Haddon Spurgeon | Evidence records: 558
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS60
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons60.pdf
+Spurgeon's Sermons Volume 61: 1915 | Collection: Charles Haddon Spurgeon | Evidence records: 544
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS61
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons61.pdf
+Spurgeon's Sermons Volume 62: 1916 | Collection: Charles Haddon Spurgeon | Evidence records: 462
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS62
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons62.pdf
+Spurgeon's Sermons Volume 63: 1917 | Collection: Charles Haddon Spurgeon | Evidence records: 187
+  Source ID: CHARLES_HADDON_SPURGEON_SERMONS63
+  Original file: raw_documents/Charles Haddon Spurgeon/sermons63.pdf
+The Treasury of David: Volume III | Collection: Charles Haddon Spurgeon | Evidence records: 30
+  Source ID: CHARLES_HADDON_SPURGEON_TREASURY3
+  Original file: raw_documents/Charles Haddon Spurgeon/treasury3.pdf
+Till He Come | Collection: Charles Haddon Spurgeon | Evidence records: 118
+  Source ID: CHARLES_HADDON_SPURGEON_TILL_HE_COME
+  Original file: raw_documents/Charles Haddon Spurgeon/till_he_come.pdf
+Treasury of David: Volume I | Collection: Charles Haddon Spurgeon | Evidence records: 26
+  Source ID: CHARLES_HADDON_SPURGEON_TREASURY1
+  Original file: raw_documents/Charles Haddon Spurgeon/treasury1.pdf
+Treasury of David: Volume II | Collection: Charles Haddon Spurgeon | Evidence records: 31
+  Source ID: CHARLES_HADDON_SPURGEON_TREASURY2
+  Original file: raw_documents/Charles Haddon Spurgeon/treasury2.pdf
+Treasury of David: Volume IV | Collection: Charles Haddon Spurgeon | Evidence records: 23
+  Source ID: CHARLES_HADDON_SPURGEON_TREASURY4
+  Original file: raw_documents/Charles Haddon Spurgeon/treasury4.pdf
+Treasury of David: Volume V | Collection: Charles Haddon Spurgeon | Evidence records: 0
+  Source ID: CHARLES_HADDON_SPURGEON_TREASURY5
+  Original file: raw_documents/Charles Haddon Spurgeon/treasury5.pdf
+Treasury of David: Volume VI | Collection: Charles Haddon Spurgeon | Evidence records: 30
+  Source ID: CHARLES_HADDON_SPURGEON_TREASURY6
+  Original file: raw_documents/Charles Haddon Spurgeon/treasury6.pdf
+A Commentary on the Epistle to the Ephesians | Collection: Charles Hodge | Evidence records: 171
+  Source ID: CHARLES_HODGE_EPHESIANS
+  Original file: raw_documents/Charles Hodge/ephesians.pdf
+Systematic Theology - Index | Collection: Charles Hodge | Evidence records: 0
+  Source ID: CHARLES_HODGE_THEOLOGY4
+  Original file: raw_documents/Charles Hodge/theology4.pdf
+Systematic Theology - Volume I | Collection: Charles Hodge | Evidence records: 400
+  Source ID: CHARLES_HODGE_THEOLOGY1
+  Original file: raw_documents/Charles Hodge/theology1.pdf
+Systematic Theology - Volume II | Collection: Charles Hodge | Evidence records: 608
+  Source ID: CHARLES_HODGE_THEOLOGY2
+  Original file: raw_documents/Charles Hodge/theology2.pdf
+Systematic Theology - Volume III | Collection: Charles Hodge | Evidence records: 690
+  Source ID: CHARLES_HODGE_THEOLOGY3
+  Original file: raw_documents/Charles Hodge/theology3.pdf
+What is Darwinism? | Collection: Charles Hodge | Evidence records: 70
+  Source ID: CHARLES_HODGE_DARWINISM
+  Original file: raw_documents/Charles Hodge/darwinism.pdf
+The Philosophy of Revelation | Collection: Herman Bavinck | Evidence records: 190
+  Source ID: HERMAN_BAVINCK_REVELATION
+  Original file: raw_documents/Herman Bavinck/revelation.pdf
+Expository Thoughts on Matthew | Collection: J. C. Ryle | Evidence records: 177
+  Source ID: J_C_RYLE_MATTHEW
+  Original file: raw_documents/J. C. Ryle/matthew.pdf
+Holiness: Its Nature, Hindrances, Difficulties, and Roots | Collection: J. C. Ryle | Evidence records: 242
+  Source ID: J_C_RYLE_HOLINESS
+  Original file: raw_documents/J. C. Ryle/holiness.pdf
+The Upper Room: Being a Few Truths for the Times | Collection: J. C. Ryle | Evidence records: 232
+  Source ID: J_C_RYLE_UPPER_ROOM
+  Original file: raw_documents/J. C. Ryle/upper_room.pdf
+Grace Abounding | Collection: John Bunyan | Evidence records: 69
+  Source ID: JOHN_BUNYAN_GRACE
+  Original file: raw_documents/John Bunyan/grace.pdf
+Miscellaneous Pieces | Collection: John Bunyan | Evidence records: 11
+  Source ID: JOHN_BUNYAN_MISCELLANEOUS
+  Original file: raw_documents/John Bunyan/miscellaneous.pdf
+The Holy War | Collection: John Bunyan | Evidence records: 154
+  Source ID: JOHN_BUNYAN_HOLY_WAR
+  Original file: raw_documents/John Bunyan/holy_war.pdf
+The Life and Death of Mr Badman | Collection: John Bunyan | Evidence records: 137
+  Source ID: JOHN_BUNYAN_BADMAN
+  Original file: raw_documents/John Bunyan/badman.pdf
+The Pilgrim's Progress | Collection: John Bunyan | Evidence records: 140
+  Source ID: JOHN_BUNYAN_PILGRIM
+  Original file: raw_documents/John Bunyan/pilgrim.pdf
+A Treatise on Relics | Collection: John Calvin | Evidence records: 4
+  Source ID: CALVIN_TREATISE_RELICS
+  Original file: raw_documents/John Calvin/treatise_relics.pdf
+Calvin's Commentaries—Complete | Collection: John Calvin | Evidence records: 0
+  Source ID: CALVIN_COMMENTARIES
+  Original file: raw_documents/John Calvin/commentaries.pdf
+Calvin: Commentaries | Collection: John Calvin | Evidence records: 235
+  Source ID: CALVIN_CALCOM
+  Original file: raw_documents/John Calvin/calcom.pdf
+Commentaries on the Catholic Epistles | Collection: John Calvin | Evidence records: 329
+  Source ID: CALVIN_CALCOM45
+  Original file: raw_documents/John Calvin/calcom45.pdf
+Commentary on Acts - Volume 1 | Collection: John Calvin | Evidence records: 406
+  Source ID: CALVIN_CALCOM36
+  Original file: raw_documents/John Calvin/calcom36.pdf
+Commentary on Acts - Volume 2 | Collection: John Calvin | Evidence records: 329
+  Source ID: CALVIN_CALCOM37
+  Original file: raw_documents/John Calvin/calcom37.pdf
+Commentary on Corinthians - Volume 1 | Collection: John Calvin | Evidence records: 359
+  Source ID: CALVIN_CALCOM39
+  Original file: raw_documents/John Calvin/calcom39.pdf
+Commentary on Corinthians - Volume 2 | Collection: John Calvin | Evidence records: 328
+  Source ID: CALVIN_CALCOM40
+  Original file: raw_documents/John Calvin/calcom40.pdf
+Commentary on Daniel - Volume 1 | Collection: John Calvin | Evidence records: 370
+  Source ID: CALVIN_CALCOM24
+  Original file: raw_documents/John Calvin/calcom24.pdf
+Commentary on Daniel - Volume 2 | Collection: John Calvin | Evidence records: 391
+  Source ID: CALVIN_CALCOM25
+  Original file: raw_documents/John Calvin/calcom25.pdf
+Commentary on Ezekiel - Volume 1 | Collection: John Calvin | Evidence records: 385
+  Source ID: CALVIN_CALCOM22
+  Original file: raw_documents/John Calvin/calcom22.pdf
+Commentary on Ezekiel - Volume 2 | Collection: John Calvin | Evidence records: 435
+  Source ID: CALVIN_CALCOM23
+  Original file: raw_documents/John Calvin/calcom23.pdf
+Commentary on Galatians and Ephesians | Collection: John Calvin | Evidence records: 257
+  Source ID: CALVIN_CALCOM41
+  Original file: raw_documents/John Calvin/calcom41.pdf
+Commentary on Genesis - Volume 1 | Collection: John Calvin | Evidence records: 381
+  Source ID: CALVIN_CALCOM01
+  Original file: raw_documents/John Calvin/calcom01.pdf
+Commentary on Genesis - Volume 2 | Collection: John Calvin | Evidence records: 343
+  Source ID: CALVIN_CALCOM02
+  Original file: raw_documents/John Calvin/calcom02.pdf
+Commentary on Habakkuk, Zephaniah, Haggai | Collection: John Calvin | Evidence records: 311
+  Source ID: CALVIN_CALCOM29
+  Original file: raw_documents/John Calvin/calcom29.pdf
+Commentary on Hebrews | Collection: John Calvin | Evidence records: 332
+  Source ID: CALVIN_CALCOM44
+  Original file: raw_documents/John Calvin/calcom44.pdf
+Commentary on Hosea | Collection: John Calvin | Evidence records: 419
+  Source ID: CALVIN_CALCOM26
+  Original file: raw_documents/John Calvin/calcom26.pdf
+Commentary on Isaiah - Volume 1 | Collection: John Calvin | Evidence records: 328
+  Source ID: CALVIN_CALCOM13
+  Original file: raw_documents/John Calvin/calcom13.pdf
+Commentary on Isaiah - Volume 2 | Collection: John Calvin | Evidence records: 367
+  Source ID: CALVIN_CALCOM14
+  Original file: raw_documents/John Calvin/calcom14.pdf
+Commentary on Isaiah - Volume 3 | Collection: John Calvin | Evidence records: 356
+  Source ID: CALVIN_CALCOM15
+  Original file: raw_documents/John Calvin/calcom15.pdf
+Commentary on Isaiah - Volume 4 | Collection: John Calvin | Evidence records: 328
+  Source ID: CALVIN_CALCOM16
+  Original file: raw_documents/John Calvin/calcom16.pdf
+Commentary on Jeremiah and Lamentations - Volume 1 | Collection: John Calvin | Evidence records: 450
+  Source ID: CALVIN_CALCOM17
+  Original file: raw_documents/John Calvin/calcom17.pdf
+Commentary on Jeremiah and Lamentations - Volume 2 | Collection: John Calvin | Evidence records: 403
+  Source ID: CALVIN_CALCOM18
+  Original file: raw_documents/John Calvin/calcom18.pdf
+Commentary on Jeremiah and Lamentations - Volume 3 | Collection: John Calvin | Evidence records: 418
+  Source ID: CALVIN_CALCOM19
+  Original file: raw_documents/John Calvin/calcom19.pdf
+Commentary on Jeremiah and Lamentations - Volume 4 | Collection: John Calvin | Evidence records: 553
+  Source ID: CALVIN_CALCOM20
+  Original file: raw_documents/John Calvin/calcom20.pdf
+Commentary on Jeremiah and Lamentations - Volume 5 | Collection: John Calvin | Evidence records: 546
+  Source ID: CALVIN_CALCOM21
+  Original file: raw_documents/John Calvin/calcom21.pdf
+Commentary on Joel, Amos, Obadiah | Collection: John Calvin | Evidence records: 388
+  Source ID: CALVIN_CALCOM27
+  Original file: raw_documents/John Calvin/calcom27.pdf
+Commentary on John - Volume 1 | Collection: John Calvin | Evidence records: 326
+  Source ID: CALVIN_CALCOM34
+  Original file: raw_documents/John Calvin/calcom34.pdf
+Commentary on John - Volume 2 | Collection: John Calvin | Evidence records: 230
+  Source ID: CALVIN_CALCOM35
+  Original file: raw_documents/John Calvin/calcom35.pdf
+Commentary on Jonah, Micah, Nahum | Collection: John Calvin | Evidence records: 433
+  Source ID: CALVIN_CALCOM28
+  Original file: raw_documents/John Calvin/calcom28.pdf
+Commentary on Joshua | Collection: John Calvin | Evidence records: 250
+  Source ID: CALVIN_CALCOM07
+  Original file: raw_documents/John Calvin/calcom07.pdf
+Commentary on Matthew, Mark, Luke - Volume 1 | Collection: John Calvin | Evidence records: 358
+  Source ID: CALVIN_CALCOM31
+  Original file: raw_documents/John Calvin/calcom31.pdf
+Commentary on Matthew, Mark, Luke - Volume 2 | Collection: John Calvin | Evidence records: 357
+  Source ID: CALVIN_CALCOM32
+  Original file: raw_documents/John Calvin/calcom32.pdf
+Commentary on Matthew, Mark, Luke - Volume 3 | Collection: John Calvin | Evidence records: 278
+  Source ID: CALVIN_CALCOM33
+  Original file: raw_documents/John Calvin/calcom33.pdf
+Commentary on Philippians, Colossians, and Thessalonians | Collection: John Calvin | Evidence records: 302
+  Source ID: CALVIN_CALCOM42
+  Original file: raw_documents/John Calvin/calcom42.pdf
+Commentary on Psalms - Volume 1 | Collection: John Calvin | Evidence records: 502
+  Source ID: CALVIN_CALCOM08
+  Original file: raw_documents/John Calvin/calcom08.pdf
+Commentary on Psalms - Volume 2 | Collection: John Calvin | Evidence records: 375
+  Source ID: CALVIN_CALCOM09
+  Original file: raw_documents/John Calvin/calcom09.pdf
+Commentary on Psalms - Volume 3 | Collection: John Calvin | Evidence records: 399
+  Source ID: CALVIN_CALCOM10
+  Original file: raw_documents/John Calvin/calcom10.pdf
+Commentary on Psalms - Volume 4 | Collection: John Calvin | Evidence records: 374
+  Source ID: CALVIN_CALCOM11
+  Original file: raw_documents/John Calvin/calcom11.pdf
+Commentary on Psalms - Volume 5 | Collection: John Calvin | Evidence records: 438
+  Source ID: CALVIN_CALCOM12
+  Original file: raw_documents/John Calvin/calcom12.pdf
+Commentary on Romans | Collection: John Calvin | Evidence records: 443
+  Source ID: CALVIN_CALCOM38
+  Original file: raw_documents/John Calvin/calcom38.pdf
+Commentary on Timothy, Titus, Philemon | Collection: John Calvin | Evidence records: 274
+  Source ID: CALVIN_CALCOM43
+  Original file: raw_documents/John Calvin/calcom43.pdf
+Commentary on Zechariah, Malachi | Collection: John Calvin | Evidence records: 557
+  Source ID: CALVIN_CALCOM30
+  Original file: raw_documents/John Calvin/calcom30.pdf
+Harmony of the Law - Volume 1 | Collection: John Calvin | Evidence records: 314
+  Source ID: CALVIN_CALCOM03
+  Original file: raw_documents/John Calvin/calcom03.pdf
+Harmony of the Law - Volume 2 | Collection: John Calvin | Evidence records: 380
+  Source ID: CALVIN_CALCOM04
+  Original file: raw_documents/John Calvin/calcom04.pdf
+Harmony of the Law - Volume 3 | Collection: John Calvin | Evidence records: 379
+  Source ID: CALVIN_CALCOM05
+  Original file: raw_documents/John Calvin/calcom05.pdf
+Harmony of the Law - Volume 4 | Collection: John Calvin | Evidence records: 282
+  Source ID: CALVIN_CALCOM06
+  Original file: raw_documents/John Calvin/calcom06.pdf
+Institutio Christianae Religionis vol. 1 | Collection: John Calvin | Evidence records: 0
+  Source ID: CALVIN_INSTITUTIO1
+  Original file: raw_documents/John Calvin/institutio1.pdf
+Institutio Christianae Religionis vol. 2 | Collection: John Calvin | Evidence records: 2
+  Source ID: CALVIN_INSTITUTIO2
+  Original file: raw_documents/John Calvin/institutio2.pdf
+Of Prayer—A Perpetual Exercise of Faith. The Daily Benefits Derived from It. | Collection: John Calvin | Evidence records: 66
+  Source ID: CALVIN_PRAYER
+  Original file: raw_documents/John Calvin/prayer.pdf
+On the Christian Life | Collection: John Calvin | Evidence records: 29
+  Source ID: CALVIN_CHR_LIFE
+  Original file: raw_documents/John Calvin/chr_life.pdf
+The Institutes of the Christian Religion | Collection: John Calvin | Evidence records: 1113
+  Source ID: CALVIN_INSTITUTES
+  Original file: raw_documents/John Calvin/institutes.pdf
+Three Volumes of Sermons | Collection: John Calvin | Evidence records: 1732
+  Source ID: CALVIN_SERMONS
+  Original file: raw_documents/John Calvin/sermons.pdf
+Callista: a Tale of the Third Century | Collection: John Henry Newman | Evidence records: 141
+  Source ID: JOHN_HENRY_NEWMAN_CALLISTA
+  Original file: raw_documents/John Henry Newman/callista.pdf
+Newman's Apologia Pro Vita Sua | Collection: John Henry Newman | Evidence records: 12
+  Source ID: JOHN_HENRY_NEWMAN_APOLOGIA
+  Original file: raw_documents/John Henry Newman/apologia.pdf
+The Dream of Gerontius | Collection: John Henry Newman | Evidence records: 10
+  Source ID: JOHN_HENRY_NEWMAN_GERONTIUS
+  Original file: raw_documents/John Henry Newman/gerontius.pdf
+Tracts for the Times | Collection: John Henry Newman | Evidence records: 327
+  Source ID: JOHN_HENRY_NEWMAN_TRACTSTIMES
+  Original file: raw_documents/John Henry Newman/tractstimes.pdf
+A Brief Declaration and Vindication of The Doctrine of the Trinity | Collection: John Owen | Evidence records: 64
+  Source ID: JOHN_OWEN_TRINITY
+  Original file: raw_documents/John Owen/trinity.pdf
+A Brief Instruction in the Worship of God | Collection: John Owen | Evidence records: 82
+  Source ID: JOHN_OWEN_WORSHIP
+  Original file: raw_documents/John Owen/worship.pdf
+A Discourse concerning Evangelical Love, Church Peace, and Unity | Collection: John Owen | Evidence records: 109
+  Source ID: JOHN_OWEN_CHURCHLOVE
+  Original file: raw_documents/John Owen/churchlove.pdf
+A Discourse Concerning Liturgies, and their Imposition | Collection: John Owen | Evidence records: 45
+  Source ID: JOHN_OWEN_LITURGIES
+  Original file: raw_documents/John Owen/liturgies.pdf
+A Display of Arminianism | Collection: John Owen | Evidence records: 126
+  Source ID: JOHN_OWEN_DISPLAY
+  Original file: raw_documents/John Owen/display.pdf
+A Dissertation on Divine Justice | Collection: John Owen | Evidence records: 133
+  Source ID: JOHN_OWEN_JUSTICE
+  Original file: raw_documents/John Owen/justice.pdf
+A Practical Exposition upon Psalm CXXX | Collection: John Owen | Evidence records: 227
+  Source ID: JOHN_OWEN_PSALM130
+  Original file: raw_documents/John Owen/psalm130.pdf
+A Review of the Annotations of Hugo Grotius | Collection: John Owen | Evidence records: 20
+  Source ID: JOHN_OWEN_GROTIUS
+  Original file: raw_documents/John Owen/grotius.pdf
+A Treatise of the Dominion of Sin and Grace | Collection: John Owen | Evidence records: 53
+  Source ID: JOHN_OWEN_SIN_GRACE
+  Original file: raw_documents/John Owen/sin_grace.pdf
+An Inquiry into the Original, Nature, Institution, Power, Order, and Communion of Evangelical Churches | Collection: John Owen | Evidence records: 360
+  Source ID: JOHN_OWEN_EVANGELICALCHURCHES
+  Original file: raw_documents/John Owen/evangelicalchurches.pdf
+Eshcol; A Cluster of the Fruit of Canaan | Collection: John Owen | Evidence records: 30
+  Source ID: JOHN_OWEN_ESHCOL
+  Original file: raw_documents/John Owen/eshcol.pdf
+Gospel Grounds and Evidences of the Faith of God's Elect | Collection: John Owen | Evidence records: 47
+  Source ID: JOHN_OWEN_FAITH
+  Original file: raw_documents/John Owen/faith.pdf
+Meditations and Discourses on the Glory of Christ | Collection: John Owen | Evidence records: 118
+  Source ID: JOHN_OWEN_GLORY
+  Original file: raw_documents/John Owen/glory.pdf
+Nature and Causes of Apostasy from the Gospel | Collection: John Owen | Evidence records: 219
+  Source ID: JOHN_OWEN_APOSTASY
+  Original file: raw_documents/John Owen/apostasy.pdf
+Of Communion with God the Father, Son and Holy Ghost | Collection: John Owen | Evidence records: 320
+  Source ID: JOHN_OWEN_COMMUNION
+  Original file: raw_documents/John Owen/communion.pdf
+Of Schism | Collection: John Owen | Evidence records: 147
+  Source ID: JOHN_OWEN_SCHISM
+  Original file: raw_documents/John Owen/schism.pdf
+Of Temptation | Collection: John Owen | Evidence records: 51
+  Source ID: JOHN_OWEN_TEMPTATION
+  Original file: raw_documents/John Owen/temptation.pdf
+Of the Mortification of Sin in Believers | Collection: John Owen | Evidence records: 68
+  Source ID: JOHN_OWEN_MORT
+  Original file: raw_documents/John Owen/mort.pdf
+Pneumatologia | Collection: John Owen | Evidence records: 981
+  Source ID: JOHN_OWEN_PNEUM
+  Original file: raw_documents/John Owen/pneum.pdf
+Poema | Collection: John Owen | Evidence records: 4
+  Source ID: JOHN_OWEN_POEMA
+  Original file: raw_documents/John Owen/poema.pdf
+Sacramental Discourses | Collection: John Owen | Evidence records: 90
+  Source ID: JOHN_OWEN_DISCOURSES
+  Original file: raw_documents/John Owen/discourses.pdf
+Several Practical Cases of Conscience Resolved | Collection: John Owen | Evidence records: 32
+  Source ID: JOHN_OWEN_CONSCIENCE
+  Original file: raw_documents/John Owen/conscience.pdf
+The Death of Death in the Death of Christ | Collection: John Owen | Evidence records: 260
+  Source ID: JOHN_OWEN_DEATHOFDEATH
+  Original file: raw_documents/John Owen/deathofdeath.pdf
+The Doctrine of Justification by Faith | Collection: John Owen | Evidence records: 337
+  Source ID: JOHN_OWEN_JUST
+  Original file: raw_documents/John Owen/just.pdf
+The Doctrine of the Saints' Perseverance Explained and Confirmed | Collection: John Owen | Evidence records: 538
+  Source ID: JOHN_OWEN_PERSEVERANCE
+  Original file: raw_documents/John Owen/perseverance.pdf
+The Duty of Pastors and People Distinguished | Collection: John Owen | Evidence records: 41
+  Source ID: JOHN_OWEN_PASTORSPEOPLE
+  Original file: raw_documents/John Owen/pastorspeople.pdf
+The Grace and Duty of being Spiritually Minded | Collection: John Owen | Evidence records: 182
+  Source ID: JOHN_OWEN_SPIRITUALLYMINDED
+  Original file: raw_documents/John Owen/spirituallyminded.pdf
+The Nature, Power, Deceit, and Prevelancy of the Remainders of Indwelling Sin in Believers | Collection: John Owen | Evidence records: 124
+  Source ID: JOHN_OWEN_INDWELLINGSIN
+  Original file: raw_documents/John Owen/indwellingsin.pdf
+The Sermons of John Owen | Collection: John Owen | Evidence records: 991
+  Source ID: JOHN_OWEN_SERMONS
+  Original file: raw_documents/John Owen/sermons.pdf
+Truth and Innocence Vindicated | Collection: John Owen | Evidence records: 120
+  Source ID: JOHN_OWEN_TRUTHINNOCENCE
+  Original file: raw_documents/John Owen/truthinnocence.pdf
+Two Short Catechisms | Collection: John Owen | Evidence records: 42
+  Source ID: JOHN_OWEN_CATECHISMS
+  Original file: raw_documents/John Owen/catechisms.pdf
+Vindiciæ Evangelicæ or, the Mystery of the Gospel Vindicated and Socinianism Examined | Collection: John Owen | Evidence records: 429
+  Source ID: JOHN_OWEN_VINDICEVANG
+  Original file: raw_documents/John Owen/vindicevang.pdf
+A Plain Account of Christian Perfection | Collection: John Wesley | Evidence records: 47
+  Source ID: JOHN_WESLEY_PERFECTION
+  Original file: raw_documents/John Wesley/perfection.pdf
+Sermons on Several Occasions | Collection: John Wesley | Evidence records: 1033
+  Source ID: JOHN_WESLEY_SERMONS
+  Original file: raw_documents/John Wesley/sermons.pdf
+The Journal of John Wesley | Collection: John Wesley | Evidence records: 344
+  Source ID: JOHN_WESLEY_JOURNAL
+  Original file: raw_documents/John Wesley/journal.pdf
+The Poetical Works of John and Charles Wesley | Collection: John Wesley | Evidence records: 311
+  Source ID: JOHN_WESLEY_WORKS
+  Original file: raw_documents/John Wesley/works.pdf
+Wesley's Notes on the Bible | Collection: John Wesley | Evidence records: 1622
+  Source ID: JOHN_WESLEY_NOTES
+  Original file: raw_documents/John Wesley/notes.pdf
+An Unpublished Essay on the Trinity | Collection: Jonathan Edwards | Evidence records: 13
+  Source ID: JONATHAN_EDWARDS_TRINITY
+  Original file: raw_documents/Jonathan Edwards/trinity.pdf
+Freedom of the Will | Collection: Jonathan Edwards | Evidence records: 158
+  Source ID: JONATHAN_EDWARDS_WILL
+  Original file: raw_documents/Jonathan Edwards/will.pdf
+Religious Affections | Collection: Jonathan Edwards | Evidence records: 258
+  Source ID: JONATHAN_EDWARDS_AFFECTIONS
+  Original file: raw_documents/Jonathan Edwards/affections.pdf
+Select Sermons | Collection: Jonathan Edwards | Evidence records: 292
+  Source ID: JONATHAN_EDWARDS_SERMONS
+  Original file: raw_documents/Jonathan Edwards/sermons.pdf
+The Works of Jonathan Edwards, Volume One | Collection: Jonathan Edwards | Evidence records: 2230
+  Source ID: JONATHAN_EDWARDS_WORKS1
+  Original file: raw_documents/Jonathan Edwards/works1.pdf
+The Works of Jonathan Edwards, Volume Two | Collection: Jonathan Edwards | Evidence records: 2114
+  Source ID: JONATHAN_EDWARDS_WORKS2
+  Original file: raw_documents/Jonathan Edwards/works2.pdf
+Treatise on Grace | Collection: Jonathan Edwards | Evidence records: 35
+  Source ID: JONATHAN_EDWARDS_TREATISEONGRACE
+  Original file: raw_documents/Jonathan Edwards/treatiseongrace.pdf
+Introduction to the New Testament | Collection: Louis Berkhof | Evidence records: 158
+  Source ID: LOUIS_BERKHOF_NEWTESTAMENT
+  Original file: raw_documents/Louis Berkhof/newtestament.pdf
+Summary of Christian Doctrine | Collection: Louis Berkhof | Evidence records: 53
+  Source ID: LOUIS_BERKHOF_SUMMARY
+  Original file: raw_documents/Louis Berkhof/summary.pdf
+Systematic Theology | Collection: Louis Berkhof | Evidence records: 658
+  Source ID: LOUIS_BERKHOF_SYSTEMATICTHEOLOGY
+  Original file: raw_documents/Louis Berkhof/systematictheology.pdf
+A Commentary on St. Paul's Epistle to the Galatians | Collection: Martin Luther | Evidence records: 130
+  Source ID: LUTHER_GALATIANS
+  Original file: raw_documents/Martin Luther/galatians.pdf
+A Treatise on Good Works | Collection: Martin Luther | Evidence records: 59
+  Source ID: LUTHER_GOOD_WORKS
+  Original file: raw_documents/Martin Luther/good_works.pdf
+An Open Letter on Translating | Collection: Martin Luther | Evidence records: 11
+  Source ID: LUTHER_TRANSLATING
+  Original file: raw_documents/Martin Luther/translating.pdf
+Assorted Sermons By Martin Luther | Collection: Martin Luther | Evidence records: 66
+  Source ID: LUTHER_SERMONS
+  Original file: raw_documents/Martin Luther/sermons.pdf
+Concerning Christian Liberty | Collection: Martin Luther | Evidence records: 30
+  Source ID: LUTHER_CHRISTIANLIBERTY
+  Original file: raw_documents/Martin Luther/christianliberty.pdf
+De Servo Arbitrio “On the Enslaved Will” or The Bondage of Will | Collection: Martin Luther | Evidence records: 197
+  Source ID: LUTHER_BONDAGE
+  Original file: raw_documents/Martin Luther/bondage.pdf
+First Principles of the Reformation or the Ninety-five Theses and the Three Primary Works | Collection: Martin Luther | Evidence records: 164
+  Source ID: LUTHER_FIRST_PRIN
+  Original file: raw_documents/Martin Luther/first_prin.pdf
+Luther's Little Instruction Book: The Small Catechism of Martin Luther | Collection: Martin Luther | Evidence records: 38
+  Source ID: LUTHER_SMALLCAT
+  Original file: raw_documents/Martin Luther/smallcat.pdf
+Ninety-five Theses (Latin) | Collection: Martin Luther | Evidence records: 6
+  Source ID: LUTHER_THESES
+  Original file: raw_documents/Martin Luther/theses.pdf
+Preface to the Letter of St. Paul to the Romans | Collection: Martin Luther | Evidence records: 0
+  Source ID: LUTHER_PREFACETOROMANS
+  Original file: raw_documents/Martin Luther/prefacetoromans.pdf
+Table Talk | Collection: Martin Luther | Evidence records: 160
+  Source ID: LUTHER_TABLETALK
+  Original file: raw_documents/Martin Luther/tabletalk.pdf
+The Epistles of St. Peter and St. Jude Preached and Explained | Collection: Martin Luther | Evidence records: 135
+  Source ID: LUTHER_STPETER_STJUDE
+  Original file: raw_documents/Martin Luther/stpeter_stjude.pdf
+The Large Catechism | Collection: Martin Luther | Evidence records: 68
+  Source ID: LUTHER_LARGECATECHISM
+  Original file: raw_documents/Martin Luther/largecatechism.pdf
+The Smalcald Articles | Collection: Martin Luther | Evidence records: 21
+  Source ID: LUTHER_SMALCALD
+  Original file: raw_documents/Martin Luther/smalcald.pdf
+NPNF-211. Sulpitius Severus, Vincent of Lerins, John Cassian | Collection: Nicene and Post-Nicene Fathers | Evidence records: 59
+  Source ID: NPNF2_11
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf211.pdf
+NPNF-212. Leo the Great, Gregory the Great | Collection: Nicene and Post-Nicene Fathers | Evidence records: 374
+  Source ID: NPNF2_12
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf212.pdf
+NPNF-213. Gregory the Great (II), Ephraim Syrus, Aphrahat | Collection: Nicene and Post-Nicene Fathers | Evidence records: 0
+  Source ID: NPNF2_13
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf213.pdf
+NPNF1-01. The Confessions and Letters of St. Augustine, with a Sketch of his Life and Work | Collection: Nicene and Post-Nicene Fathers | Evidence records: 1094
+  Source ID: NPNF1_01
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf101.pdf
+NPNF1-02. St. Augustine's City of God and Christian Doctrine | Collection: Nicene and Post-Nicene Fathers | Evidence records: 1268
+  Source ID: NPNF1_02
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf102.pdf
+NPNF1-03. On the Holy Trinity; Doctrinal Treatises; Moral Treatises | Collection: Nicene and Post-Nicene Fathers | Evidence records: 2
+  Source ID: NPNF1_03
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf103.pdf
+NPNF1-04. Augustine: The Writings Against the Manichaeans and Against the Donatists | Collection: Nicene and Post-Nicene Fathers | Evidence records: 1144
+  Source ID: NPNF1_04
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf104.pdf
+NPNF1-05. St. Augustine: Anti-Pelagian Writings | Collection: Nicene and Post-Nicene Fathers | Evidence records: 1331
+  Source ID: NPNF1_05
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf105.pdf
+NPNF1-06. St. Augustine: Sermon on the Mount; Harmony of the Gospels; Homilies on the Gospels | Collection: Nicene and Post-Nicene Fathers | Evidence records: 1074
+  Source ID: NPNF1_06
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf106.pdf
+NPNF1-07. St. Augustine: Homilies on the Gospel of John; Homilies on the First Epistle of John; Soliloquies | Collection: Nicene and Post-Nicene Fathers | Evidence records: 927
+  Source ID: NPNF1_07
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf107.pdf
+NPNF1-08. St. Augustine: Exposition on the Book of Psalms | Collection: Nicene and Post-Nicene Fathers | Evidence records: 1347
+  Source ID: NPNF1_08
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf108.pdf
+NPNF1-09. St. Chrysostom: On the Priesthood; Ascetic Treatises; Select Homilies and Letters; Homilies on the Statutes | Collection: Nicene and Post-Nicene Fathers | Evidence records: 677
+  Source ID: NPNF1_09
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf109.pdf
+NPNF1-10. St. Chrysostom: Homilies on the Gospel of Saint Matthew | Collection: Nicene and Post-Nicene Fathers | Evidence records: 887
+  Source ID: NPNF1_10
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf110.pdf
+NPNF1-11. Saint Chrysostom: Homilies on the Acts of the Apostles and the Epistle to the Romans | Collection: Nicene and Post-Nicene Fathers | Evidence records: 936
+  Source ID: NPNF1_11
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf111.pdf
+NPNF1-12. Saint Chrysostom: Homilies on the Epistles of Paul to the Corinthians | Collection: Nicene and Post-Nicene Fathers | Evidence records: 678
+  Source ID: NPNF1_12
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf112.pdf
+NPNF1-13. Saint Chrysostom: Homilies on Galatians, Ephesians, Philippians, Colossians, Thessalonians, Timothy, Titus, and Philemon | Collection: Nicene and Post-Nicene Fathers | Evidence records: 937
+  Source ID: NPNF1_13
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf113.pdf
+NPNF1-14. Saint Chrysostom: Homilies on the Gospel of St. John and the Epistle to the Hebrews | Collection: Nicene and Post-Nicene Fathers | Evidence records: 949
+  Source ID: NPNF1_14
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf114.pdf
+NPNF2-01. Eusebius Pamphilius: Church History, Life of Constantine, Oration in Praise of Constantine | Collection: Nicene and Post-Nicene Fathers | Evidence records: 1152
+  Source ID: NPNF2_01
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf201.pdf
+NPNF2-02. Socrates and Sozomenus Ecclesiastical Histories | Collection: Nicene and Post-Nicene Fathers | Evidence records: 810
+  Source ID: NPNF2_02
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf202.pdf
+NPNF2-03. Theodoret, Jerome, Gennadius, & Rufinus: Historical Writings | Collection: Nicene and Post-Nicene Fathers | Evidence records: 21
+  Source ID: NPNF2_03
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf203.pdf
+NPNF2-04. Athanasius: Select Works and Letters | Collection: Nicene and Post-Nicene Fathers | Evidence records: 961
+  Source ID: NPNF2_04
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf204.pdf
+NPNF2-05. Gregory of Nyssa: Dogmatic Treatises, Etc. | Collection: Nicene and Post-Nicene Fathers | Evidence records: 967
+  Source ID: NPNF2_05
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf205.pdf
+NPNF2-06. Jerome: The Principal Works of St. Jerome | Collection: Nicene and Post-Nicene Fathers | Evidence records: 990
+  Source ID: NPNF2_06
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf206.pdf
+NPNF2-07. Cyril of Jerusalem, Gregory Nazianzen | Collection: Nicene and Post-Nicene Fathers | Evidence records: 0
+  Source ID: NPNF2_07
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf207.pdf
+NPNF2-08. Basil: Letters and Select Works | Collection: Nicene and Post-Nicene Fathers | Evidence records: 871
+  Source ID: NPNF2_08
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf208.pdf
+NPNF2-09. Hilary of Poitiers, John of Damascus | Collection: Nicene and Post-Nicene Fathers | Evidence records: 0
+  Source ID: NPNF2_09
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf209.pdf
+NPNF2-10. Ambrose: Selected Works and Letters | Collection: Nicene and Post-Nicene Fathers | Evidence records: 928
+  Source ID: NPNF2_10
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf210.pdf
+NPNF2-14. The Seven Ecumenical Councils | Collection: Nicene and Post-Nicene Fathers | Evidence records: 5
+  Source ID: NPNF2_14
+  Original file: raw_documents/Nicene and Post-Nicene Fathers/npnf214.pdf
+A Dictionary of the Bible | Collection: Philip Schaff | Evidence records: 726
+  Source ID: PHILIP_SCHAFF_DICTIONARYBIBLE
+  Original file: raw_documents/Philip Schaff/dictionarybible.pdf
+Creeds of Christendom, with a History and Critical notes. Volume I. The History of Creeds. | Collection: Philip Schaff | Evidence records: 769
+  Source ID: PHILIP_SCHAFF_CREEDS1
+  Original file: raw_documents/Philip Schaff/creeds1.pdf
+Creeds of Christendom, with a History and Critical notes. Volume II. The History of Creeds. | Collection: Philip Schaff | Evidence records: 411
+  Source ID: PHILIP_SCHAFF_CREEDS2
+  Original file: raw_documents/Philip Schaff/creeds2.pdf
+creeds3 | Collection: Philip Schaff | Evidence records: 0
+  Source ID: PHILIP_SCHAFF_CREEDS3
+  Original file: raw_documents/Philip Schaff/creeds3.pdf
+History of the Christian Church, Volume I: Apostolic Christianity. A.D. 1-100 | Collection: Philip Schaff | Evidence records: 541
+  Source ID: PHILIP_SCHAFF_HCC1
+  Original file: raw_documents/Philip Schaff/hcc1.pdf
+History of the Christian Church, Volume II: Ante-Nicene Christianity. A.D. 100-325 | Collection: Philip Schaff | Evidence records: 465
+  Source ID: PHILIP_SCHAFF_HCC2
+  Original file: raw_documents/Philip Schaff/hcc2.pdf
+History of the Christian Church, Volume III: Nicene and Post-Nicene Christianity. A.D. 311-600 | Collection: Philip Schaff | Evidence records: 669
+  Source ID: PHILIP_SCHAFF_HCC3
+  Original file: raw_documents/Philip Schaff/hcc3.pdf
+History of the Christian Church, Volume IV: Mediaeval Christianity. A.D. 590-1073 | Collection: Philip Schaff | Evidence records: 425
+  Source ID: PHILIP_SCHAFF_HCC4
+  Original file: raw_documents/Philip Schaff/hcc4.pdf
+History of the Christian Church, Volume V: The Middle Ages. A.D. 1049-1294 | Collection: Philip Schaff | Evidence records: 607
+  Source ID: PHILIP_SCHAFF_HCC5
+  Original file: raw_documents/Philip Schaff/hcc5.pdf
+History of the Christian Church, Volume VI: The Middle Ages. A.D. 1294-1517 | Collection: Philip Schaff | Evidence records: 569
+  Source ID: PHILIP_SCHAFF_HCC6
+  Original file: raw_documents/Philip Schaff/hcc6.pdf
+History of the Christian Church, Volume VII. Modern Christianity. The German Reformation | Collection: Philip Schaff | Evidence records: 502
+  Source ID: PHILIP_SCHAFF_HCC7
+  Original file: raw_documents/Philip Schaff/hcc7.pdf
+History of the Christian Church, Volume VIII: Modern Christianity. The Swiss Reformation | Collection: Philip Schaff | Evidence records: 637
+  Source ID: PHILIP_SCHAFF_HCC8
+  Original file: raw_documents/Philip Schaff/hcc8.pdf
+The New Schaff-Herzog Encyclopedia of Religious Knowledge [Dictionary edition] | Collection: Philip Schaff | Evidence records: 2
+  Source ID: PHILIP_SCHAFF_ENCYC13A
+  Original file: raw_documents/Philip Schaff/encyc13a.pdf
+The New Schaff-Herzog Encyclopedia of Religious Knowledge, Vol. I: Aachen - Basilians | Collection: Philip Schaff | Evidence records: 714
+  Source ID: PHILIP_SCHAFF_ENCYC01
+  Original file: raw_documents/Philip Schaff/encyc01.pdf
+The New Schaff-Herzog Encyclopedia of Religious Knowledge, Vol. II: Basilica - Chambers | Collection: Philip Schaff | Evidence records: 691
+  Source ID: PHILIP_SCHAFF_ENCYC02
+  Original file: raw_documents/Philip Schaff/encyc02.pdf
+The New Schaff-Herzog Encyclopedia of Religious Knowledge, Vol. III: Chamier - Draendorf | Collection: Philip Schaff | Evidence records: 20
+  Source ID: PHILIP_SCHAFF_ENCYC03
+  Original file: raw_documents/Philip Schaff/encyc03.pdf
+The New Schaff-Herzog Encyclopedia of Religious Knowledge, Vol. IV: Draeseke - Goa | Collection: Philip Schaff | Evidence records: 19
+  Source ID: PHILIP_SCHAFF_ENCYC04
+  Original file: raw_documents/Philip Schaff/encyc04.pdf
+The New Schaff-Herzog Encyclopedia of Religious Knowledge, Vol. IX: Petri - Reuchlin | Collection: Philip Schaff | Evidence records: 812
+  Source ID: PHILIP_SCHAFF_ENCYC09
+  Original file: raw_documents/Philip Schaff/encyc09.pdf
+The New Schaff-Herzog Encyclopedia of Religious Knowledge, Vol. V: Goar - Innocent | Collection: Philip Schaff | Evidence records: 19
+  Source ID: PHILIP_SCHAFF_ENCYC05
+  Original file: raw_documents/Philip Schaff/encyc05.pdf
+The New Schaff-Herzog Encyclopedia of Religious Knowledge, Vol. VI: Innocents - Liudger | Collection: Philip Schaff | Evidence records: 19
+  Source ID: PHILIP_SCHAFF_ENCYC06
+  Original file: raw_documents/Philip Schaff/encyc06.pdf
+The New Schaff-Herzog Encyclopedia of Religious Knowledge, Vol. VII: Liutprand - Moralities | Collection: Philip Schaff | Evidence records: 20
+  Source ID: PHILIP_SCHAFF_ENCYC07
+  Original file: raw_documents/Philip Schaff/encyc07.pdf
+The New Schaff-Herzog Encyclopedia of Religious Knowledge, Vol. VIII: Morality - Petersen | Collection: Philip Schaff | Evidence records: 20
+  Source ID: PHILIP_SCHAFF_ENCYC08
+  Original file: raw_documents/Philip Schaff/encyc08.pdf
+The New Schaff-Herzog Encyclopedia of Religious Knowledge, Vol. X: Reutsch - Son | Collection: Philip Schaff | Evidence records: 18
+  Source ID: PHILIP_SCHAFF_ENCYC10
+  Original file: raw_documents/Philip Schaff/encyc10.pdf
+The New Schaff-Herzog Encyclopedia of Religious Knowledge, Vol. XI: Son of Man - Tremellius | Collection: Philip Schaff | Evidence records: 18
+  Source ID: PHILIP_SCHAFF_ENCYC11
+  Original file: raw_documents/Philip Schaff/encyc11.pdf
+The New Schaff-Herzog Encyclopedia of Religious Knowledge, Vol. XII: Trench - Zwingli | Collection: Philip Schaff | Evidence records: 22
+  Source ID: PHILIP_SCHAFF_ENCYC12
+  Original file: raw_documents/Philip Schaff/encyc12.pdf
+The New Schaff-Herzog Encyclopedia of Religious Knowledge, Vol. XIII: Index | Collection: Philip Schaff | Evidence records: 2
+  Source ID: PHILIP_SCHAFF_ENCYC13
+  Original file: raw_documents/Philip Schaff/encyc13.pdf
+The Person of Christ: The Miracle of History. With a Reply to Strauss and Renan, and a Collection of Testimonies of Unbelievers. | Collection: Philip Schaff | Evidence records: 115
+  Source ID: PHILIP_SCHAFF_PERSON
+  Original file: raw_documents/Philip Schaff/person.pdf
+The Romance of M. Renan, and the Christ of the Gospels. Three Essays by Rev. Dr. Schaff and M. Napoleon Roussel. | Collection: Philip Schaff | Evidence records: 64
+  Source ID: PHILIP_SCHAFF_ROMANCE
+  Original file: raw_documents/Philip Schaff/romance.pdf
+Catena Aurea - Gospel of Mark | Collection: Thomas Aquinas | Evidence records: 149
+  Source ID: AQUINAS_CATENA2
+  Original file: raw_documents/Thomas Aquinas/catena2.pdf
+Catena Aurea - Gospel of Matthew | Collection: Thomas Aquinas | Evidence records: 487
+  Source ID: AQUINAS_CATENA1
+  Original file: raw_documents/Thomas Aquinas/catena1.pdf
+Nature and Grace: Selections from the Summa Theologica of Thomas Aquinas | Collection: Thomas Aquinas | Evidence records: 281
+  Source ID: AQUINAS_NATURE_GRACE
+  Original file: raw_documents/Thomas Aquinas/nature_grace.pdf
+Of God and His Creatures | Collection: Thomas Aquinas | Evidence records: 648
+  Source ID: AQUINAS_GENTILES
+  Original file: raw_documents/Thomas Aquinas/gentiles.pdf
+Summa Theologica | Collection: Thomas Aquinas | Evidence records: 4379
+  Source ID: AQUINAS_SUMMA
+  Original file: raw_documents/Thomas Aquinas/summa.pdf
+
+END OF CATALOG

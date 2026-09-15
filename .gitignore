@@ -1,0 +1,12 @@
+__pycache__/
+**/__pycache__/
+*.pyc
+generated/semantic_index.sqlite
+generated/semantic_index.sqlite-*
+generated/gui_search_history.json
+generated/test_runs/
+generated/test_write_dir/
+build/
+dist/
+release/
+release/*.exe

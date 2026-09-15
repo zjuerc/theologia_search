@@ -1,0 +1,281 @@
+{
+  "failed_count": 0,
+  "generated_at": "2026-09-11T07:26:33.945438+00:00",
+  "index_path": "generated/semantic_index.sqlite",
+  "passed_count": 7,
+  "queries_path": "evaluation/queries.jsonl",
+  "query_count": 7,
+  "results": [
+    {
+      "concept": "Animal soul",
+      "direct_terms": [
+        "soul"
+      ],
+      "expected_evidence_hit": true,
+      "expected_evidence_ids": [
+        "ANF_03_EVID_01221_BODY_01"
+      ],
+      "expected_source_hit": true,
+      "expected_term_hit": true,
+      "expected_terms": [
+        "soul"
+      ],
+      "matched_terms": [
+        "animal",
+        "soul"
+      ],
+      "median_match_quality_rank": 4,
+      "must_include_any_source_ids": [],
+      "notes": "Should prefer evidence where animal/animalis language appears near soul, not generic soul-only rows.",
+      "passed": true,
+      "query_id": "animal_soul",
+      "raw_query_terms": [
+        "animal",
+        "soul"
+      ],
+      "result_count": 10,
+      "top_evidence_id": "ANF_03_EVID_01221_BODY_01",
+      "top_match_quality": "Strong",
+      "top_score": 58.635573,
+      "top_score_gap": 0.344613,
+      "top_source_id": "ANF_03",
+      "weak_result_rate": 0.0
+    },
+    {
+      "concept": "live under law",
+      "direct_terms": [
+        "law"
+      ],
+      "expected_evidence_hit": true,
+      "expected_evidence_ids": [
+        "NPNF2_11_EVID_01338_BODY_01"
+      ],
+      "expected_source_hit": true,
+      "expected_term_hit": true,
+      "expected_terms": [
+        "law"
+      ],
+      "matched_terms": [
+        "law",
+        "live"
+      ],
+      "median_match_quality_rank": 4,
+      "must_include_any_source_ids": [],
+      "notes": "Should prefer evidence with living/live/lived language near law.",
+      "passed": true,
+      "query_id": "live_under_law",
+      "raw_query_terms": [
+        "live",
+        "law"
+      ],
+      "result_count": 10,
+      "top_evidence_id": "NPNF2_11_EVID_01338_BODY_01",
+      "top_match_quality": "Strong",
+      "top_score": 69.160359,
+      "top_score_gap": 0.998655,
+      "top_source_id": "NPNF2_11",
+      "weak_result_rate": 0.0
+    },
+    {
+      "concept": "relationship between three persons in trinity",
+      "direct_terms": [
+        "three persons",
+        "trinity"
+      ],
+      "expected_evidence_hit": true,
+      "expected_evidence_ids": [
+        "AQUINAS_SUMMA_EVID_00590_BODY_01"
+      ],
+      "expected_source_hit": true,
+      "expected_term_hit": true,
+      "expected_terms": [
+        "three persons",
+        "trinity"
+      ],
+      "matched_terms": [
+        "deity",
+        "essence",
+        "father",
+        "holy ghost",
+        "holy spirit",
+        "holy trinity",
+        "only begotten",
+        "persons",
+        "relationship",
+        "son of god",
+        "spirit of god",
+        "substance",
+        "three",
+        "three persons",
+        "trinity",
+        "triune",
+        "unity of god"
+      ],
+      "median_match_quality_rank": 3,
+      "must_include_any_source_ids": [],
+      "notes": "Should retrieve Trinity evidence where persons and relation-like language are together.",
+      "passed": true,
+      "query_id": "trinity_personal_relations",
+      "raw_query_terms": [
+        "relationship",
+        "three",
+        "persons",
+        "trinity"
+      ],
+      "result_count": 10,
+      "top_evidence_id": "AQUINAS_GENTILES_EVID_00609_BODY_01",
+      "top_match_quality": "Strong",
+      "top_score": 93.036468,
+      "top_score_gap": 0.302449,
+      "top_source_id": "AQUINAS_GENTILES",
+      "weak_result_rate": 0.0
+    },
+    {
+      "concept": "faith and works",
+      "direct_terms": [
+        "faith",
+        "works"
+      ],
+      "expected_evidence_hit": true,
+      "expected_evidence_ids": [
+        "JOHN_OWEN_JUST_EVID_00381_BODY_01"
+      ],
+      "expected_source_hit": true,
+      "expected_term_hit": true,
+      "expected_terms": [
+        "faith"
+      ],
+      "matched_terms": [
+        "faith",
+        "works"
+      ],
+      "median_match_quality_rank": 5,
+      "must_include_any_source_ids": [],
+      "notes": "Should surface evidence joining faith with work/works language when available.",
+      "passed": true,
+      "query_id": "faith_and_works",
+      "raw_query_terms": [
+        "faith",
+        "works"
+      ],
+      "result_count": 10,
+      "top_evidence_id": "JOHN_OWEN_JUST_EVID_00381_BODY_01",
+      "top_match_quality": "Excellent",
+      "top_score": 74.904568,
+      "top_score_gap": 0.001496,
+      "top_source_id": "JOHN_OWEN_JUST",
+      "weak_result_rate": 0.0
+    },
+    {
+      "concept": "image of God",
+      "direct_terms": [
+        "image of god",
+        "god"
+      ],
+      "expected_evidence_hit": true,
+      "expected_evidence_ids": [
+        "AQUINAS_SUMMA_EVID_01200_BODY_01"
+      ],
+      "expected_source_hit": true,
+      "expected_term_hit": true,
+      "expected_terms": [
+        "god"
+      ],
+      "matched_terms": [
+        "god",
+        "image",
+        "image of god"
+      ],
+      "median_match_quality_rank": 5,
+      "must_include_any_source_ids": [],
+      "notes": "Should favor image/imago/dei language near God rather than broad God-only evidence.",
+      "passed": true,
+      "query_id": "image_of_god",
+      "raw_query_terms": [
+        "image",
+        "god"
+      ],
+      "result_count": 10,
+      "top_evidence_id": "AQUINAS_SUMMA_EVID_01200_BODY_01",
+      "top_match_quality": "Excellent",
+      "top_score": 81.206941,
+      "top_score_gap": 0.099842,
+      "top_source_id": "AQUINAS_SUMMA",
+      "weak_result_rate": 0.0
+    },
+    {
+      "concept": "procession of the spirit",
+      "direct_terms": [
+        "spirit"
+      ],
+      "expected_evidence_hit": true,
+      "expected_evidence_ids": [
+        "AQUINAS_SUMMA_EVID_00491_BODY_01",
+        "PHILIP_SCHAFF_HCC4_EVID_00436_BODY_01",
+        "PHILIP_SCHAFF_HCC4_EVID_00438_BODY_01"
+      ],
+      "expected_source_hit": true,
+      "expected_term_hit": true,
+      "expected_terms": [
+        "spirit"
+      ],
+      "matched_terms": [
+        "procession",
+        "spirit"
+      ],
+      "median_match_quality_rank": 4,
+      "must_include_any_source_ids": [],
+      "notes": "Prefer evidence directly discussing the procession of the Holy Spirit; older Aquinas evidence remains an acceptable related hit.",
+      "passed": true,
+      "query_id": "procession_of_the_spirit",
+      "raw_query_terms": [
+        "procession",
+        "spirit"
+      ],
+      "result_count": 10,
+      "top_evidence_id": "PHILIP_SCHAFF_HCC4_EVID_00436_BODY_01",
+      "top_match_quality": "Excellent",
+      "top_score": 65.779758,
+      "top_score_gap": 1.918382,
+      "top_source_id": "PHILIP_SCHAFF_HCC4",
+      "weak_result_rate": 0.0
+    },
+    {
+      "concept": "original sin",
+      "direct_terms": [
+        "original sin",
+        "sin"
+      ],
+      "expected_evidence_hit": true,
+      "expected_evidence_ids": [
+        "AQUINAS_NATURE_GRACE_EVID_00130_BODY_01"
+      ],
+      "expected_source_hit": true,
+      "expected_term_hit": true,
+      "expected_terms": [
+        "sin"
+      ],
+      "matched_terms": [
+        "original",
+        "original sin",
+        "sin"
+      ],
+      "median_match_quality_rank": 5,
+      "must_include_any_source_ids": [],
+      "notes": "Should favor original/origin language near sin.",
+      "passed": true,
+      "query_id": "original_sin",
+      "raw_query_terms": [
+        "original",
+        "sin"
+      ],
+      "result_count": 10,
+      "top_evidence_id": "AQUINAS_SUMMA_EVID_02331_BODY_01",
+      "top_match_quality": "Excellent",
+      "top_score": 82.084694,
+      "top_score_gap": 0.031024,
+      "top_source_id": "AQUINAS_SUMMA",
+      "weak_result_rate": 0.0
+    }
+  ]
+}

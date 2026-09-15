@@ -19,6 +19,7 @@ datas = [
     (str(PROJECT_ROOT / "concept_query_lexicon.json"), "."),
     (str(PROJECT_ROOT / "installer" / "README.txt"), "."),
     (str(PROJECT_ROOT / "CATALOG.txt"), "."),
+    (str(PROJECT_ROOT / "license"), "license"),
 ]
 
 hiddenimports = [

@@ -1,5 +1,7 @@
 # Theologia Search
 
+Download the latest release [here](https://github.com/zjuerc/theologia_search/releases/).
+
 Theologia Search is a deterministic search application for a source-faithful
 collection of Christian theological books. It retrieves and ranks evidence from
 a local SQLite index. It does not generate theological conclusions, summaries,
@@ -115,6 +117,15 @@ The installer includes the Python runtime, PySide6 and Qt libraries, the SQLite
 database, search configuration, fonts, artwork, README, and `CATALOG.txt`.
 The current installed payload is approximately 1.9 GB; the compressed setup file
 is substantially smaller.
+
+### Licensing
+
+Theologia Search is distributed under the non-commercial terms in
+[`license/LICENSE.txt`](license/LICENSE.txt). Third-party font terms and CCEL
+copyright information are documented in [`license/THIRD-PARTY-NOTICES.txt`](license/THIRD-PARTY-NOTICES.txt).
+The generated SQLite database includes indexed content derived in part from
+CCEL editions. Those third-party materials remain subject to their own
+licenses and rights.
 
 ### Install and distribute
 

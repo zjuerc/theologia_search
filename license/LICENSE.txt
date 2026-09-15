@@ -1,0 +1,146 @@
+THEOLOGIA SEARCH NON-COMMERCIAL LICENSE
+Version 1.0 — 14 September 2026
+
+Copyright © 2026 Theologia Search contributors.
+
+IMPORTANT NOTICE
+This license governs only the original software and other materials created
+for Theologia Search by the copyright holders identified above. It does not
+replace, restrict, or supersede any license or other legal right applicable to
+third-party materials, including the fonts and CCEL-related materials
+identified in THIRD-PARTY-NOTICES.txt.
+
+1. DEFINITIONS
+
+"Licensed Work" means the original source code, object code, documentation,
+artwork, configuration, and other copyrightable materials of Theologia Search
+that are owned or controlled by the Licensor and distributed with this notice.
+
+"You" means the individual or legal entity exercising rights under this
+License.
+
+"Modify" means to copy from, adapt, translate, revise, restructure, or create
+a derivative work based on the Licensed Work.
+
+"Commercial Purpose" means any purpose primarily intended for commercial
+advantage, monetary compensation, revenue generation, business operations, or
+financial benefit. Commercial Purpose includes sale, rental, lease, paid
+distribution, subscription access, monetized hosting, advertising-supported
+distribution or operation, incorporation into a paid product or service, use
+to provide paid services, and use by or for a for-profit business or other
+commercial organization.
+
+2. NON-COMMERCIAL LICENSE GRANT
+
+Subject to the terms of this License, the Licensor grants You a worldwide,
+non-exclusive, royalty-free, non-transferable license to use, reproduce,
+Modify, and redistribute the Licensed Work, in source or compiled form, solely
+for non-commercial purposes.
+
+You may distribute the Licensed Work, including a Modified version, without
+charge, provided that You comply with this License and preserve all applicable
+copyright, attribution, warranty, and third-party notices.
+
+3. COMMERCIAL RESTRICTION
+
+You must not, directly or indirectly, use, reproduce, Modify, distribute,
+publish, host, sublicense, sell, license, rent, lease, monetize, or otherwise
+exploit the Licensed Work for a Commercial Purpose.
+
+You must not charge a fee or receive monetary compensation for access to,
+distribution of, support for, or functionality materially derived from the
+Licensed Work. You must not place the Licensed Work behind a paywall or use it
+to operate an advertising-funded or revenue-generating service.
+
+Any use that is uncertainly characterized as commercial must be treated as
+prohibited unless the Licensor provides prior written permission.
+
+4. REDISTRIBUTION CONDITIONS
+
+Every copy or redistribution of the Licensed Work, whether unmodified or
+Modified, must:
+
+(a) include a complete copy of this License;
+(b) retain all copyright, attribution, and disclaimer notices;
+(c) clearly identify material changes made to the Licensed Work; and
+(d) include THIRD-PARTY-NOTICES.txt and all applicable third-party license
+    texts whenever the corresponding third-party materials are redistributed.
+
+You must not represent that the Licensor endorses, sponsors, or guarantees
+Your Modified version or Your use of the Licensed Work.
+
+5. THIRD-PARTY MATERIALS
+
+Third-party materials are governed solely by their respective licenses or
+other applicable rights. In particular, the SIL Open Font License 1.1 permits
+uses of the bundled fonts that this License does not permit for the Licensed
+Work. This License imposes no restriction on those font files and must not be
+interpreted as relicensing them.
+
+CCEL materials are not included in the Licensed Work unless expressly stated
+otherwise by their rights holder. CCEL's copyright policy is descriptive
+guidance, not a license granted by the Licensor. You are responsible for
+determining and complying with the rights applicable to each CCEL work,
+including restrictions on introductions, cover art, special contents,
+publisher-protected works, and rights that differ by jurisdiction.
+
+6. TERMINATION
+
+The rights granted by this License terminate automatically upon Your breach
+of any term. Rights terminate for a particular copy or Modified version if
+You fail to cure a material breach within thirty (30) days after receiving
+written notice of that breach. Upon termination, You must cease exercising the
+rights granted by this License and remove copies in Your possession or control
+that were distributed in breach of this License, except that lawful recipients
+who are not themselves in breach retain their rights.
+
+7. NO TRADEMARK LICENSE
+
+This License grants no right to use the names, logos, marks, or branding of the
+Licensor or Theologia Search, except as necessary to make accurate factual
+attribution.
+
+8. DISCLAIMER OF WARRANTY
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE LICENSED WORK IS
+PROVIDED "AS IS" AND "AS AVAILABLE," WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE, TITLE, NON-INFRINGEMENT, ACCURACY, OR QUIET ENJOYMENT. THE LICENSOR
+DOES NOT WARRANT THAT THE LICENSED WORK WILL MEET YOUR REQUIREMENTS, OPERATE
+WITHOUT INTERRUPTION, OR BE FREE OF ERRORS OR DEFECTS.
+
+9. LIMITATION OF LIABILITY
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, NO LICENSOR OR CONTRIBUTOR
+WILL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES, OR FOR LOSS OF PROFITS, REVENUE, DATA, GOODWILL, OR
+BUSINESS INTERRUPTION, ARISING OUT OF OR RELATING TO THIS LICENSE OR THE
+LICENSED WORK, UNDER ANY THEORY OF LIABILITY, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+10. RESERVATION OF RIGHTS
+
+All rights not expressly granted by this License are reserved by the Licensor.
+Nothing in this License limits rights that cannot lawfully be limited or
+waived, including applicable fair-use, fair-dealing, public-domain, or other
+statutory rights.
+
+11. GOVERNING LAW
+
+This License is governed by the laws of the jurisdiction in which the Licensor
+has its principal residence or place of business, without regard to its
+conflict-of-laws rules. If that jurisdiction cannot be determined, the parties
+shall seek to resolve disputes in a court of competent jurisdiction. The
+Licensor may replace this clause with a specific jurisdiction before public
+release after obtaining legal advice.
+
+12. ENTIRE LICENSE
+
+This License constitutes the entire agreement concerning the Licensed Work's
+copyright permissions under this License. If any provision is held
+unenforceable, it shall be modified only to the minimum extent necessary, and
+the remaining provisions shall remain in effect.
+
+This is a custom source-available license. It is not the GNU General Public
+License, is not intended to be GNU GPL-compatible, and should not be described
+as an open-source license because it prohibits commercial use.

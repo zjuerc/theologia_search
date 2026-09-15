@@ -41,6 +41,19 @@ It does not include the raw knowledge-base files or original source PDFs.
 The installed folder also contains CATALOG.txt, a complete list of indexed
 authors and book volumes with evidence and period statistics.
 
+LICENSES
+--------
+The installed folder contains a license subfolder with the Theologia Search
+non-commercial license, third-party notices, the SIL Open Font License texts
+for the bundled Cinzel and EB Garamond fonts, and CCEL copyright-policy
+information.
+
+The generated SQLite database includes indexed content derived in part from
+CCEL editions. CCEL materials remain subject to the rights and restrictions
+applicable to each individual work. The bundled fonts remain under the SIL
+Open Font License 1.1, which permits some commercial uses of the font files
+that are not permitted for Theologia Search itself.
+
 The packaged index contains approximately:
 
   Authors:   66 author-period records

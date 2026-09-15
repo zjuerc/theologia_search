@@ -1,0 +1,44 @@
+THEOLOGIA SEARCH THIRD-PARTY NOTICES
+
+1. BUNDLED FONTS
+
+The following bundled fonts are distributed under the SIL Open Font License,
+Version 1.1 (OFL-1.1):
+
+  - Cinzel — Copyright 2020 The Cinzel Project Authors
+  - EB Garamond — Copyright 2017 The EB Garamond Project Authors
+
+The complete applicable license texts are included in:
+
+  - OFL-Cinzel.txt
+  - OFL-EBGaramond.txt
+
+The OFL permits use, modification, and redistribution of the font software,
+including bundling with software that is sold or otherwise distributed for
+commercial purposes. Font software may not be sold by itself, and modified
+font software must remain under the OFL and comply with its reserved-name and
+notice requirements. The Theologia Search non-commercial restriction does not
+apply to the font files themselves and cannot override the OFL.
+
+2. CCEL MATERIALS
+
+Christian Classics Ethereal Library (CCEL) copyright and usage information is
+recorded in CCEL-Copyright-Policy.txt. Source:
+
+  https://ccel.org/about/copyright.html
+
+The generated Theologia Search SQLite database includes indexed text, source
+references, and/or metadata derived in part from CCEL editions. The database
+and the application do not convert that underlying CCEL material into
+Theologia Search-owned content or grant broader rights in it.
+
+CCEL states that many editions are based on books that are public domain in the
+United States, but that introductions, cover art, special contents, and some
+publisher-protected works may remain copyrighted or be used by permission.
+CCEL describes personal, educational, and non-profit use as permitted and
+directs users to contact CCEL for permission to republish CCEL works or use
+them commercially. Copyright law may differ in other countries.
+
+This notice does not grant rights in CCEL materials and does not determine the
+status of any individual work. Users must inspect the applicable book
+information and comply with the rights holder's terms and local law.

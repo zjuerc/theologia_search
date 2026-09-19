@@ -111,7 +111,7 @@ release/Theologia Search Setup.exe
 ```
 
 Precompiled installers and separately downloadable SQLite datasets are
-available in the [Theologia Search Google Drive folder](https://drive.google.com/drive/folders/1x_SvgpoRQ66EpoEqnhqHMTMm7rVF3y-g?usp=drive_link).
+available on the [Theologia Search GitHub Releases page](https://github.com/zjuerc/theologia_search/releases/latest).
 
 The installer includes the Python runtime, PySide6 and Qt libraries, the SQLite
 database, search configuration, fonts, artwork, README, and `CATALOG.txt`.
@@ -139,10 +139,10 @@ The user can choose another installation directory in the wizard. The installer
 creates a Start Menu shortcut and offers an optional Desktop shortcut. It also
 registers a normal Windows uninstaller.
 
-The setup executable can be uploaded to Google Drive or another file-sharing
-service as the sole distribution file. Set the sharing permission so recipients
-can download it. Users only need to download and run the setup file; they do not
-need the repository or the original SQLite file.
+The setup executable should be published as a release asset on the [Theologia
+Search GitHub Releases page](https://github.com/zjuerc/theologia_search/releases/latest).
+Users only need to download and run the setup file; they do not need the
+repository, `index_manifest.json`, or the original SQLite file.
 
 ## 3. Using the Installed Qt GUI
 
@@ -269,7 +269,9 @@ Git is the SQLite database. Place it here before launching the GUI:
 generated/semantic_index.sqlite
 ```
 
-Download the SQLite database from the [Theologia Search Google Drive folder](https://drive.google.com/drive/folders/1x_SvgpoRQ66EpoEqnhqHMTMm7rVF3y-g?usp=drive_link).
+Download the SQLite database from the matching release on the [Theologia Search GitHub Releases page](https://github.com/zjuerc/theologia_search/releases/latest).
+The packaged application already contains the database; this separate download is
+only for developers running the project from source.
 
 The matching `generated/index_manifest.json` must also be present beside it.
 That manifest is small and is tracked in this repository, but replace it with
@@ -293,7 +295,7 @@ distributed as a matched pair.
 ### Downloading a newer released dataset
 
 1. Download the newer SQLite database and its matching `index_manifest.json`
-   from the [Theologia Search Google Drive folder](https://drive.google.com/drive/folders/1x_SvgpoRQ66EpoEqnhqHMTMm7rVF3y-g?usp=drive_link).
+   from the corresponding release on the [Theologia Search GitHub Releases page](https://github.com/zjuerc/theologia_search/releases/latest).
 2. Replace both `generated/semantic_index.sqlite` and
    `generated/index_manifest.json`.
 3. Do not mix files from different downloads.

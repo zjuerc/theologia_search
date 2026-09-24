@@ -13,7 +13,6 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 try:
-    from . import morphology
     from . import periods
     from .common import (
         DEFAULT_INDEX_MANIFEST_PATH,
@@ -34,7 +33,6 @@ except ImportError:  # pragma: no cover - supports direct script execution.
     import sys
 
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-    import morphology
     import periods
     from common import (
         DEFAULT_INDEX_MANIFEST_PATH,
@@ -53,7 +51,7 @@ except ImportError:  # pragma: no cover - supports direct script execution.
     )
 
 
-SEMANTIC_INDEX_SCHEMA_VERSION = "1.5.0"
+SEMANTIC_INDEX_SCHEMA_VERSION = "1.6.0"
 DATASET_VERSION = "1.0.0"
 
 
@@ -138,41 +136,6 @@ CREATE TABLE term_stats (
     is_common INTEGER NOT NULL
 );
 
-CREATE TABLE morphology_forms (
-    form TEXT NOT NULL,
-    canonical TEXT NOT NULL,
-    family_id TEXT NOT NULL,
-    family_label TEXT NOT NULL,
-    kind TEXT NOT NULL,
-    weight REAL NOT NULL,
-    source TEXT NOT NULL,
-    PRIMARY KEY (form, canonical, family_id, kind)
-);
-
-CREATE TABLE evidence_morphology (
-    evidence_id TEXT NOT NULL,
-    canonical TEXT NOT NULL,
-    family_id TEXT NOT NULL,
-    family_label TEXT NOT NULL,
-    kind TEXT NOT NULL,
-    form TEXT NOT NULL,
-    occurrence_count INTEGER NOT NULL,
-    weight REAL NOT NULL,
-    PRIMARY KEY (evidence_id, canonical, family_id, kind, form)
-);
-
-CREATE TABLE morphology_stats (
-    canonical TEXT NOT NULL,
-    family_id TEXT NOT NULL,
-    family_label TEXT NOT NULL,
-    kind TEXT NOT NULL,
-    evidence_count INTEGER NOT NULL,
-    occurrence_count INTEGER NOT NULL,
-    source_count INTEGER NOT NULL,
-    idf REAL NOT NULL,
-    PRIMARY KEY (canonical, family_id, kind)
-);
-
 CREATE TABLE author_periods (
     author_norm TEXT PRIMARY KEY,
     author TEXT NOT NULL,
@@ -201,8 +164,6 @@ CREATE INDEX idx_evidence_source_page ON evidence(source_id, page_start, page_nu
 CREATE INDEX idx_evidence_heading_norm ON evidence(source_id, heading_norm);
 CREATE INDEX idx_evidence_terms_term ON evidence_terms(term);
 CREATE INDEX idx_evidence_terms_evidence ON evidence_terms(evidence_id);
-CREATE INDEX idx_evidence_morphology_key ON evidence_morphology(canonical, family_id, kind);
-CREATE INDEX idx_evidence_morphology_evidence ON evidence_morphology(evidence_id);
 CREATE INDEX idx_mentioned_author_evidence ON evidence_mentioned_authors(author_norm, evidence_id);
 CREATE INDEX idx_mentioned_author_id ON evidence_mentioned_authors(evidence_id);
 """
@@ -224,6 +185,11 @@ def load_evidence_rows(manifest: dict, kb_dir: Path, layer: str) -> list[dict]:
                 continue
             rows.append(row)
     return rows
+
+
+def load_author_period_rows(index_path: Path) -> list[dict]:
+    """Use the existing SQLite index as the author-period migration source."""
+    return periods.read_author_period_rows(index_path)
 
 
 def load_evidence_terms(manifest: dict, kb_dir: Path, evidence_ids: set[str]) -> dict[str, Counter]:
@@ -296,65 +262,6 @@ def compute_term_stats(
     return stats
 
 
-def compute_morphology_rows(evidence_rows: list[dict]) -> tuple[list[tuple], dict[tuple[str, str, str], dict]]:
-    config = morphology.load_morphology()
-    catalog = morphology.build_form_catalog(config)
-    evidence_by_id = {row.get("evidence_id"): row for row in evidence_rows}
-    evidence_total = max(1, len(evidence_rows))
-    evidence_morphology_rows: list[tuple] = []
-    by_key: dict[tuple[str, str, str], dict] = defaultdict(
-        lambda: {"evidence": set(), "sources": set(), "occurrences": 0, "family_label": ""}
-    )
-
-    for row in evidence_rows:
-        evidence_id = row.get("evidence_id")
-        if not evidence_id:
-            continue
-        text = " ".join(
-            [
-                display_text(row.get("active_heading") or row.get("heading")),
-                display_text(row.get("outline_path")),
-                display_text(row.get("reader_text") or row.get("verbatim_text")),
-            ]
-        )
-        matches = morphology.match_text(text, catalog)
-        counts = morphology.aggregate_counts(matches)
-        match_lookup = {(match.canonical, match.family_id, match.form): match for match in matches}
-        for (canonical, family_id, form), count in sorted(counts.items()):
-            match = match_lookup[(canonical, family_id, form)]
-            key = (canonical, family_id, match.kind)
-            source_id = evidence_by_id.get(evidence_id, {}).get("source_id")
-            by_key[key]["family_label"] = match.family_label
-            by_key[key]["evidence"].add(evidence_id)
-            if source_id:
-                by_key[key]["sources"].add(source_id)
-            by_key[key]["occurrences"] += count
-            evidence_morphology_rows.append(
-                (
-                    evidence_id,
-                    canonical,
-                    family_id,
-                    match.family_label,
-                    match.kind,
-                    form,
-                    count,
-                    match.weight,
-                )
-            )
-
-    stats: dict[tuple[str, str, str], dict] = {}
-    for key, values in by_key.items():
-        evidence_count = len(values["evidence"])
-        stats[key] = {
-            "family_label": values["family_label"],
-            "evidence_count": evidence_count,
-            "occurrence_count": values["occurrences"],
-            "source_count": len(values["sources"]),
-            "idf": math.log((1 + evidence_total) / (1 + evidence_count)) + 1.0,
-        }
-    return evidence_morphology_rows, stats
-
-
 def create_connection(index_path: Path) -> sqlite3.Connection:
     index_path.parent.mkdir(parents=True, exist_ok=True)
     remove_sqlite_sidecars(index_path)
@@ -375,14 +282,13 @@ def insert_metadata(
     manifest: dict,
     evidence_count: int,
     term_count: int,
+    author_period_rows: list[dict],
 ) -> None:
     metadata = {
         "dataset_version": DATASET_VERSION,
         "semantic_index_schema_version": SEMANTIC_INDEX_SCHEMA_VERSION,
-        "morphology_schema_version": morphology.MORPHOLOGY_SCHEMA_VERSION,
-        "morphology_config_digest": morphology.morphology_digest(),
         "author_period_schema_version": periods.AUTHOR_PERIOD_SCHEMA_VERSION,
-        "author_periods_digest": periods.author_periods_digest(),
+        "author_periods_digest": periods.author_periods_digest(author_period_rows),
         "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(),
         "kb_dir": str(kb_dir),
         "kb_schema_version": display_text(manifest.get("schema_version")),
@@ -418,10 +324,8 @@ def build_semantic_index(
     evidence_terms = load_evidence_terms(manifest, kb_dir, evidence_ids)
     evidence_scriptures = load_evidence_scriptures(manifest, kb_dir, evidence_ids)
     term_stats = compute_term_stats(evidence_rows, evidence_terms)
-    morphology_config = morphology.load_morphology()
-    morphology_catalog = morphology.build_form_catalog(morphology_config)
-    evidence_morphology_rows, morphology_stats = compute_morphology_rows(evidence_rows)
-    author_periods_config = periods.load_author_periods()
+    author_period_rows = load_author_period_rows(index_path)
+    author_period_lookup = periods.build_author_lookup(author_period_rows)
 
     index_path.parent.mkdir(parents=True, exist_ok=True)
     temp_path = index_path.with_name(index_path.name + ".tmp")
@@ -440,6 +344,7 @@ def build_semantic_index(
             manifest=manifest,
             evidence_count=len(evidence_rows),
             term_count=len(term_stats),
+            author_period_rows=author_period_rows,
         )
 
         con.executemany(
@@ -462,22 +367,7 @@ def build_semantic_index(
             )
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
-            [
-                (
-                    norm_lookup(row.get("author_norm") or row.get("author")),
-                    display_text(row.get("author")),
-                    row.get("birth_year"),
-                    row.get("death_year"),
-                    row.get("active_year"),
-                    row.get("period_id"),
-                    periods.PERIOD_LABELS.get(row.get("period_id"), row.get("period_id")),
-                    display_text(row.get("confidence") or "medium"),
-                    display_text(row.get("notes")),
-                    json.dumps(row.get("source_urls") or [], ensure_ascii=False, sort_keys=True),
-                )
-                for row in author_periods_config.get("authors", [])
-                if norm_lookup(row.get("author_norm") or row.get("author")) and row.get("period_id")
-            ],
+            [tuple(row.get(column) for column in periods.AUTHOR_PERIOD_COLUMNS) for row in author_period_rows],
         )
 
         evidence_insert_rows = []
@@ -500,7 +390,7 @@ def build_semantic_index(
                 key=str.casefold,
             )
             mentioned_authors_text = " ".join(mentioned_authors)
-            period = periods.assign_period(author, collection, author_periods_config)
+            period = periods.assign_period(author, collection, author_period_lookup)
             heading = display_text(row.get("active_heading") or row.get("heading"))
             outline_path = display_text(row.get("outline_path"))
             text = row.get("reader_text") or row.get("verbatim_text") or ""
@@ -630,62 +520,6 @@ def build_semantic_index(
                 for term, values in sorted(term_stats.items())
             ],
         )
-        morphology_form_rows = []
-        seen_forms = set()
-        for form, values in sorted(morphology_catalog.items()):
-            for value in values:
-                key = (form, value.canonical, value.family_id, value.kind)
-                if key in seen_forms:
-                    continue
-                seen_forms.add(key)
-                morphology_form_rows.append(
-                    (
-                        form,
-                        value.canonical,
-                        value.family_id,
-                        value.family_label,
-                        value.kind,
-                        value.weight,
-                        value.source,
-                    )
-                )
-        con.executemany(
-            """
-            INSERT INTO morphology_forms(form, canonical, family_id, family_label, kind, weight, source)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-            """,
-            morphology_form_rows,
-        )
-        con.executemany(
-            """
-            INSERT INTO evidence_morphology(
-                evidence_id, canonical, family_id, family_label, kind, form, occurrence_count, weight
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            """,
-            evidence_morphology_rows,
-        )
-        con.executemany(
-            """
-            INSERT INTO morphology_stats(
-                canonical, family_id, family_label, kind, evidence_count, occurrence_count, source_count, idf
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            """,
-            [
-                (
-                    canonical,
-                    family_id,
-                    values["family_label"],
-                    kind,
-                    values["evidence_count"],
-                    values["occurrence_count"],
-                    values["source_count"],
-                    values["idf"],
-                )
-                for (canonical, family_id, kind), values in sorted(morphology_stats.items())
-            ],
-        )
         con.commit()
     except Exception:
         con.rollback()
@@ -701,7 +535,6 @@ def build_semantic_index(
         "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(),
         "index_path": str(index_path),
         "semantic_index_schema_version": SEMANTIC_INDEX_SCHEMA_VERSION,
-        "morphology_schema_version": morphology.MORPHOLOGY_SCHEMA_VERSION,
         "kb_dir": str(kb_dir),
         "kb_schema_version": manifest.get("schema_version"),
         "kb_builder_version": manifest.get("builder_version"),
@@ -709,12 +542,9 @@ def build_semantic_index(
         "layer": layer,
         "evidence_count": len(evidence_rows),
         "term_count": len(term_stats),
-        "morphology_form_count": sum(len(values) for values in morphology_catalog.values()),
-        "morphology_match_count": len(evidence_morphology_rows),
         "author_period_schema_version": periods.AUTHOR_PERIOD_SCHEMA_VERSION,
-        "author_period_count": len(author_periods_config.get("authors", [])),
-        "author_periods_digest": periods.author_periods_digest(author_periods_config),
-        "morphology_config_digest": morphology.morphology_digest(morphology_config),
+        "author_period_count": len(author_period_rows),
+        "author_periods_digest": periods.author_periods_digest(author_period_rows),
         "policy": {
             "ai_models_used": False,
             "embeddings_used": False,

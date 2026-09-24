@@ -10,7 +10,6 @@ from dataclasses import dataclass
 from pathlib import Path
 
 try:
-    from . import morphology
     from . import periods
     from .build_index import SEMANTIC_INDEX_SCHEMA_VERSION, build_semantic_index
     from .common import (
@@ -27,7 +26,6 @@ try:
     )
 except ImportError:  # pragma: no cover - supports direct script execution.
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-    import morphology
     import periods
     from build_index import SEMANTIC_INDEX_SCHEMA_VERSION, build_semantic_index
     from common import (
@@ -75,17 +73,15 @@ def expected_evidence_count(manifest: dict, kb_dir: Path, layer: str) -> int:
     return total
 
 
-def kb_snapshot(kb_dir: Path, layer: str) -> dict:
+def kb_snapshot(kb_dir: Path, layer: str, index_path: Path | None = None) -> dict:
     manifest = load_manifest(kb_dir)
     if layer not in set(EVIDENCE_KEYS) | {"all"}:
         raise SemanticSearchError(f"unknown evidence layer: {layer}")
     return {
         "kb_dir": str(kb_dir),
         "semantic_index_schema_version": SEMANTIC_INDEX_SCHEMA_VERSION,
-        "morphology_schema_version": morphology.MORPHOLOGY_SCHEMA_VERSION,
-        "morphology_config_digest": morphology.morphology_digest(),
         "author_period_schema_version": periods.AUTHOR_PERIOD_SCHEMA_VERSION,
-        "author_periods_digest": periods.author_periods_digest(),
+        "author_periods_digest": periods.author_periods_digest(periods.read_author_period_rows(index_path)),
         "kb_schema_version": manifest.get("schema_version") or "",
         "kb_builder_version": manifest.get("builder_version") or "",
         "kb_generated_at": manifest.get("generated_at") or "",
@@ -142,7 +138,7 @@ def check_index_sync(
     index_manifest_path: Path = DEFAULT_INDEX_MANIFEST_PATH,
     layer: str = "primary",
 ) -> SyncReport:
-    snapshot = kb_snapshot(kb_dir, layer)
+    snapshot = kb_snapshot(kb_dir, layer, index_path)
     manifest = read_index_manifest(index_manifest_path)
     sqlite_metadata = read_sqlite_metadata(index_path)
     messages: list[str] = []
@@ -152,8 +148,6 @@ def check_index_sync(
     else:
         for key in (
             "semantic_index_schema_version",
-            "morphology_schema_version",
-            "morphology_config_digest",
             "author_period_schema_version",
             "author_periods_digest",
             "kb_schema_version",
@@ -169,8 +163,6 @@ def check_index_sync(
     else:
         for key in (
             "semantic_index_schema_version",
-            "morphology_schema_version",
-            "morphology_config_digest",
             "author_period_schema_version",
             "author_periods_digest",
             "kb_schema_version",
@@ -191,8 +183,6 @@ def check_index_sync(
         compare_embedded_dataset_version(manifest, sqlite_metadata, messages)
         for key in (
             "semantic_index_schema_version",
-            "morphology_schema_version",
-            "morphology_config_digest",
             "author_period_schema_version",
             "author_periods_digest",
             "kb_schema_version",

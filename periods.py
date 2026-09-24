@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sqlite3
 from dataclasses import dataclass
-from pathlib import Path
 
 try:
     from .common import display_text, norm_lookup
@@ -14,7 +14,6 @@ except ImportError:  # pragma: no cover - supports direct script execution.
 
 
 AUTHOR_PERIOD_SCHEMA_VERSION = "1.0.0"
-DEFAULT_AUTHOR_PERIODS_PATH = Path(__file__).resolve().with_name("author_periods.json")
 
 PRE_NICENE = "before_nicene"
 NICENE_TO_REFORMATION = "nicene_to_reformation"
@@ -41,27 +40,37 @@ class PeriodAssignment:
     notes: str
 
 
-def load_author_periods(path: Path = DEFAULT_AUTHOR_PERIODS_PATH) -> dict:
-    if not path.exists():
-        return {"schema_version": AUTHOR_PERIOD_SCHEMA_VERSION, "authors": []}
-    with path.open("r", encoding="utf-8") as stream:
-        return json.load(stream)
+AUTHOR_PERIOD_COLUMNS = (
+    "author_norm", "author", "birth_year", "death_year", "active_year",
+    "period_id", "period_label", "confidence", "notes", "source_urls_json",
+)
 
 
-def registered_author_names(config: dict | None = None, path: Path = DEFAULT_AUTHOR_PERIODS_PATH) -> tuple[str, ...]:
-    """Return the curated author names available to metadata search controls."""
-    data = config if config is not None else load_author_periods(path)
-    names = {
-        display_text(row.get("author"))
-        for row in data.get("authors", [])
-        if display_text(row.get("author"))
-    }
-    return tuple(sorted(names, key=str.casefold))
+def read_author_period_rows(index_path) -> list[dict]:
+    """Read the author-period source from an existing SQLite index."""
+    if not index_path or not index_path.exists():
+        return []
+    con = None
+    try:
+        con = sqlite3.connect(str(index_path))
+        con.row_factory = sqlite3.Row
+        rows = con.execute(
+            "SELECT " + ", ".join(AUTHOR_PERIOD_COLUMNS) + " FROM author_periods"
+        ).fetchall()
+    except sqlite3.Error:
+        return []
+    finally:
+        if con is not None:
+            con.close()
+    return [dict(row) for row in rows]
 
 
-def author_periods_digest(config: dict | None = None, path: Path = DEFAULT_AUTHOR_PERIODS_PATH) -> str:
-    data = config if config is not None else load_author_periods(path)
-    payload = json.dumps(data, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+def author_periods_digest(rows: list[dict] | tuple[dict, ...] | None = None) -> str:
+    normalized = []
+    for row in rows or []:
+        normalized.append({column: row.get(column) for column in AUTHOR_PERIOD_COLUMNS})
+    normalized.sort(key=lambda row: (row.get("author_norm") or "", row.get("author") or ""))
+    payload = json.dumps(normalized, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
     return hashlib.sha256(payload).hexdigest()
 
 
@@ -75,9 +84,9 @@ def period_for_year(year: int | None) -> str:
     return POST_REFORMATION
 
 
-def build_author_lookup(config: dict) -> dict[str, dict]:
+def build_author_lookup(rows: list[dict] | tuple[dict, ...]) -> dict[str, dict]:
     lookup = {}
-    for row in config.get("authors", []):
+    for row in rows:
         name = norm_lookup(row.get("author"))
         if name:
             lookup[name] = row
@@ -98,8 +107,8 @@ def fallback_assignment(collection: str | None) -> PeriodAssignment:
     return PeriodAssignment(UNCLASSIFIED, PERIOD_LABELS[UNCLASSIFIED], None, "unclassified", "low", collection_text)
 
 
-def assign_period(author: str | None, collection: str | None, config: dict) -> PeriodAssignment:
-    row = build_author_lookup(config).get(norm_lookup(author))
+def assign_period(author: str | None, collection: str | None, lookup: dict[str, dict] | None = None) -> PeriodAssignment:
+    row = (lookup or {}).get(norm_lookup(author))
     if row:
         basis_year = row.get("active_year") or row.get("death_year") or row.get("birth_year")
         period_id = row.get("period_id") or period_for_year(basis_year)
@@ -107,7 +116,7 @@ def assign_period(author: str | None, collection: str | None, config: dict) -> P
             period_id=period_id,
             period_label=PERIOD_LABELS.get(period_id, period_id),
             basis_year=basis_year,
-            source="author_periods",
+            source="author_periods_sqlite",
             confidence=display_text(row.get("confidence") or "medium"),
             notes=display_text(row.get("notes")),
         )

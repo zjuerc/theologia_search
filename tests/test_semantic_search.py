@@ -25,7 +25,6 @@ from theologia_search import (
     discover_from_queries,
     evaluate_search,
     gui,
-    morphology,
     periods,
     search,
 )
@@ -130,6 +129,16 @@ def write_fixture_kb(root: Path) -> Path:
                 "The argument turns on whether soul and flesh are confused."
             ),
             "work_attributed_author": "Tertullian",
+        },
+        {
+            "active_heading": "The Savior and Saviour",
+            "evidence_id": "SAVIOR_EVID_1",
+            "outline_path": "Salvation > The Savior and Saviour",
+            "page_number": 44,
+            "retrieval_layer": "primary",
+            "source_id": "SRC_MISC",
+            "verbatim_text": "The Savior is named Saviour in older theological writing.",
+            "work_attributed_author": "Unknown",
         },
         {
             "active_heading": "On the Soul",
@@ -403,6 +412,11 @@ def write_fixture_lexicon(root: Path) -> Path:
             {
                 "entries": [
                     {
+                        "concept_id": "saviour_external_alias",
+                        "triggers": ["saviour"],
+                        "expanded_terms": ["savior"],
+                    },
+                    {
                         "concept_id": "trinity_personal_relations",
                         "triggers": ["trinity", "three persons", "relationship", "persons"],
                         "expanded_terms": [
@@ -502,7 +516,7 @@ class SemanticSearchTests(unittest.TestCase):
             self.assertTrue(results[0]["cluster_id"])
             self.assertIn("trinity", results[0]["cluster_label"])
 
-    def test_animal_soul_uses_raw_variant_and_beats_generic_soul(self):
+    def test_external_lexicon_expansion_returns_savior_evidence(self):
         with temp_workspace() as tmp_name:
             root = Path(tmp_name)
             kb_dir = write_fixture_kb(root)
@@ -516,7 +530,7 @@ class SemanticSearchTests(unittest.TestCase):
             try:
                 results, expansion = search.search_concept(
                     con,
-                    "Animal soul",
+                    "Saviour",
                     search.load_lexicon(lexicon_path),
                     include_cooccurrence=False,
                     limit=10,
@@ -524,14 +538,10 @@ class SemanticSearchTests(unittest.TestCase):
             finally:
                 con.close()
 
-            self.assertIn("animalis", expansion.mechanical_variants["animal"])
-            self.assertEqual(results[0]["evidence_id"], "ANIMAL_SOUL_EVID_1")
-            self.assertIn("animal", results[0]["matched_raw_terms"])
-            self.assertIn("animalis", results[0]["matched_mechanical_variants"]["animal"])
-            self.assertIn("soul", results[0]["matched_lemmas"])
-            self.assertIn("animal soul", results[0]["matched_term_families"])
-            self.assertIn("animalis", results[0]["matched_morphology_forms"]["animal"])
-            self.assertTrue(results[0]["proximity_matches"])
+            self.assertEqual(results[0]["evidence_id"], "SAVIOR_EVID_1")
+            self.assertIn("savior", expansion.expanded_terms)
+            self.assertEqual(expansion.morphology_terms, [])
+            self.assertEqual(results[0]["matched_morphology_forms"], {})
             self.assertIn(results[0]["match_quality"], {"strong", "moderate"})
             self.assertIn(results[0]["quality_grade"], {1, 2, 3, 4, 5})
             self.assertIn(results[0]["quality_label"], {"Excellent", "Strong", "Good", "Related", "Weak"})
@@ -539,12 +549,7 @@ class SemanticSearchTests(unittest.TestCase):
             self.assertGreaterEqual(results[0]["concept_score"], 0.0)
             self.assertLessEqual(results[0]["concept_score"], 100.0)
 
-            by_id = {row["evidence_id"]: row for row in results}
-            self.assertEqual(by_id["GENERIC_SOUL_EVID_1"]["match_quality"], "weak")
-            self.assertLess(
-                by_id["GENERIC_SOUL_EVID_1"]["concept_score"],
-                by_id["ANIMAL_SOUL_EVID_1"]["concept_score"],
-            )
+            self.assertIn("morphology", results[0]["score_breakdown"])
 
     def test_single_word_heading_match_is_strong_not_automatically_excellent(self):
         with temp_workspace() as tmp_name:
@@ -573,13 +578,12 @@ class SemanticSearchTests(unittest.TestCase):
             self.assertNotEqual(row["quality_label"], "Excellent")
             self.assertAlmostEqual(sum(row["score_breakdown"].values()), row["concept_score"], places=5)
 
-    def test_morphology_expansion_is_conservative_and_transparent(self):
+    def test_default_expansion_has_no_bundled_lexicon(self):
         with temp_workspace() as tmp_name:
             root = Path(tmp_name)
             kb_dir = write_fixture_kb(root)
             index_path = root / "theologia_search" / "generated" / "semantic_index.sqlite"
             manifest_path = root / "theologia_search" / "generated" / "index_manifest.json"
-            lexicon_path = write_fixture_lexicon(root)
             build_index.build_semantic_index(kb_dir=kb_dir, index_path=index_path, index_manifest_path=manifest_path)
 
             con = sqlite3.connect(str(index_path))
@@ -587,25 +591,25 @@ class SemanticSearchTests(unittest.TestCase):
             try:
                 single_term = search.expand_query(
                     con,
-                    "soul",
-                    search.load_lexicon(lexicon_path),
+                    "saviour",
                     include_cooccurrence=False,
                 )
                 family_query = search.expand_query(
                     con,
-                    "animal soul",
-                    search.load_lexicon(lexicon_path),
+                    "holy spirit",
                     include_cooccurrence=False,
                 )
             finally:
                 con.close()
 
-            self.assertIn("soul", single_term.morphology_terms)
+            self.assertEqual(single_term.expanded_terms, [])
+            self.assertEqual(single_term.morphology_terms, [])
             self.assertEqual(single_term.morphology_families, {})
-            self.assertIn("animal", family_query.morphology_terms)
-            self.assertEqual(family_query.morphology_families["animal_soul"], "animal soul")
+            self.assertEqual(family_query.expanded_terms, [])
+            self.assertEqual(family_query.morphology_terms, [])
+            self.assertEqual(family_query.morphology_families, {})
 
-    def test_lawful_query_uses_curated_morphology_without_registered_exact_term(self):
+    def test_external_lexicon_is_not_stored_as_morphology(self):
         with temp_workspace() as tmp_name:
             root = Path(tmp_name)
             kb_dir = write_fixture_kb(root)
@@ -619,7 +623,7 @@ class SemanticSearchTests(unittest.TestCase):
             try:
                 results, expansion = search.search_concept(
                     con,
-                    "lawful",
+                    "saviour",
                     search.load_lexicon(lexicon_path),
                     include_cooccurrence=False,
                     limit=5,
@@ -627,10 +631,11 @@ class SemanticSearchTests(unittest.TestCase):
             finally:
                 con.close()
 
-            self.assertIn("law", expansion.morphology_terms)
+            self.assertIn("savior", expansion.expanded_terms)
+            self.assertEqual(expansion.morphology_terms, [])
             self.assertTrue(results)
-            self.assertIn("law", results[0]["matched_lemmas"])
-            self.assertGreater(results[0]["score_breakdown"]["morphology"], 0)
+            self.assertEqual(results[0]["matched_morphology_forms"], {})
+            self.assertEqual(results[0]["score_breakdown"]["morphology"], 0.0)
 
     def test_period_grouped_search_returns_limit_per_historical_section(self):
         with temp_workspace() as tmp_name:
@@ -655,12 +660,11 @@ class SemanticSearchTests(unittest.TestCase):
                 con.close()
 
             by_period = {group["period_id"]: group["results"] for group in groups}
-            self.assertEqual(len(by_period[periods.PRE_NICENE]), 1)
-            self.assertEqual(len(by_period[periods.NICENE_TO_REFORMATION]), 1)
-            self.assertEqual(len(by_period[periods.POST_REFORMATION]), 1)
-            self.assertEqual(by_period[periods.PRE_NICENE][0]["author_period_id"], periods.PRE_NICENE)
-            self.assertEqual(by_period[periods.NICENE_TO_REFORMATION][0]["author"], "Thomas Aquinas")
-            self.assertEqual(by_period[periods.POST_REFORMATION][0]["author"], "John Calvin")
+            self.assertEqual(len(by_period[periods.PRE_NICENE]), 0)
+            self.assertEqual(len(by_period[periods.NICENE_TO_REFORMATION]), 0)
+            self.assertEqual(len(by_period[periods.POST_REFORMATION]), 0)
+            self.assertEqual(len(by_period[periods.UNCLASSIFIED]), 1)
+            self.assertIn(by_period[periods.UNCLASSIFIED][0]["author"], {"Tertullian", "Thomas Aquinas", "John Calvin"})
 
     def test_unknown_authors_use_anf_and_npnf_collection_fallback(self):
         with temp_workspace() as tmp_name:
@@ -1151,7 +1155,7 @@ class SemanticSearchTests(unittest.TestCase):
             ]:
                 self.assertIn(key, row)
 
-    def test_semantic_index_builds_morphology_tables_and_sync_metadata(self):
+    def test_semantic_index_omits_morphology_tables_and_keeps_period_data(self):
         with temp_workspace() as tmp_name:
             root = Path(tmp_name)
             kb_dir = write_fixture_kb(root)
@@ -1163,9 +1167,7 @@ class SemanticSearchTests(unittest.TestCase):
             con.row_factory = sqlite3.Row
             try:
                 metadata = dict(con.execute("SELECT key, value FROM metadata").fetchall())
-                forms = con.execute("SELECT COUNT(*) FROM morphology_forms").fetchone()[0]
-                matches = con.execute("SELECT COUNT(*) FROM evidence_morphology").fetchone()[0]
-                stats = con.execute("SELECT COUNT(*) FROM morphology_stats").fetchone()[0]
+                tables = {row[0] for row in con.execute("SELECT name FROM sqlite_master WHERE type = 'table'")}
                 author_period_count = con.execute("SELECT COUNT(*) FROM author_periods").fetchone()[0]
                 tertullian = con.execute(
                     "SELECT author_period_id FROM evidence WHERE evidence_id = ?",
@@ -1175,13 +1177,12 @@ class SemanticSearchTests(unittest.TestCase):
                 con.close()
 
             self.assertEqual(metadata["semantic_index_schema_version"], build_index.SEMANTIC_INDEX_SCHEMA_VERSION)
-            self.assertEqual(metadata["morphology_schema_version"], search.morphology.MORPHOLOGY_SCHEMA_VERSION)
             self.assertEqual(metadata["author_period_schema_version"], periods.AUTHOR_PERIOD_SCHEMA_VERSION)
-            self.assertGreater(forms, 0)
-            self.assertGreater(matches, 0)
-            self.assertGreater(stats, 0)
-            self.assertGreater(author_period_count, 0)
-            self.assertEqual(tertullian, periods.PRE_NICENE)
+            self.assertNotIn("morphology_forms", tables)
+            self.assertNotIn("evidence_morphology", tables)
+            self.assertNotIn("morphology_stats", tables)
+            self.assertEqual(author_period_count, 0)
+            self.assertEqual(tertullian, periods.UNCLASSIFIED)
 
             report = check_index_sync.check_index_sync(
                 kb_dir=kb_dir,
@@ -1190,17 +1191,49 @@ class SemanticSearchTests(unittest.TestCase):
             )
             self.assertTrue(report.synced, report.messages)
 
-    def test_morphology_config_validation_catches_conflicting_lemma_forms(self):
-        errors = morphology.validate_morphology_config(
-            {
-                "lemmas": [
-                    {"canonical": "law", "forms": ["lawful"], "weight": 1.0},
-                    {"canonical": "gospel", "forms": ["lawful"], "weight": 1.0},
-                ],
-                "families": [],
-            }
-        )
-        self.assertTrue(any("lawful" in error for error in errors))
+    def test_author_period_rows_are_migrated_from_existing_sqlite(self):
+        with temp_workspace() as tmp_name:
+            root = Path(tmp_name)
+            kb_dir = write_fixture_kb(root)
+            index_path = root / "theologia_search" / "generated" / "semantic_index.sqlite"
+            manifest_path = root / "theologia_search" / "generated" / "index_manifest.json"
+            source_path = root / "author_period_source.sqlite"
+            source = sqlite3.connect(source_path)
+            source.execute(
+                """
+                CREATE TABLE author_periods(
+                    author_norm TEXT PRIMARY KEY, author TEXT NOT NULL,
+                    birth_year INTEGER, death_year INTEGER, active_year INTEGER,
+                    period_id TEXT NOT NULL, period_label TEXT NOT NULL,
+                    confidence TEXT NOT NULL, notes TEXT, source_urls_json TEXT NOT NULL
+                )
+                """
+            )
+            source.execute(
+                "INSERT INTO author_periods VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (
+                    "tertullian", "Tertullian", 155, 220, None,
+                    periods.PRE_NICENE, periods.PERIOD_LABELS[periods.PRE_NICENE],
+                    "high", "migrated fixture row", "[]",
+                ),
+            )
+            source.commit()
+            source.close()
+            index_path.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source_path, index_path)
+
+            build_index.build_semantic_index(kb_dir=kb_dir, index_path=index_path, index_manifest_path=manifest_path)
+            with sqlite3.connect(index_path) as con:
+                row = con.execute(
+                    "SELECT period_id, confidence, notes FROM author_periods WHERE author_norm = ?",
+                    ("tertullian",),
+                ).fetchone()
+                evidence_source = con.execute(
+                    "SELECT author_period_source FROM evidence WHERE author = ? LIMIT 1",
+                    ("Tertullian",),
+                ).fetchone()[0]
+            self.assertEqual(row, (periods.PRE_NICENE, "high", "migrated fixture row"))
+            self.assertEqual(evidence_source, "author_periods_sqlite")
 
     def test_result_explanation_lines_include_diagnostic_fields(self):
         row = {
@@ -1271,7 +1304,7 @@ class SemanticSearchTests(unittest.TestCase):
             try:
                 rows = discover_from_queries.discover_candidates(
                     con,
-                    ["Animal soul"],
+                    ["Saviour"],
                     search.load_lexicon(lexicon_path),
                     limit=5,
                 )
@@ -1287,7 +1320,7 @@ class SemanticSearchTests(unittest.TestCase):
             self.assertTrue(csv_out.exists())
             row = rows[0]
             self.assertEqual(row["status"], "pending")
-            self.assertEqual(row["query"], "Animal soul")
+            self.assertEqual(row["query"], "Saviour")
             self.assertIn("candidate_phrase", row)
             self.assertIn("source_id", row)
             self.assertIn("evidence_id", row)
@@ -1333,10 +1366,10 @@ class SemanticSearchTests(unittest.TestCase):
                 queries_path,
                 [
                     {
-                        "query_id": "animal_soul_fixture",
-                        "concept": "Animal soul",
-                        "expected_terms": ["soul"],
-                        "expected_evidence_ids": ["ANIMAL_SOUL_EVID_1"],
+                        "query_id": "saviour_fixture",
+                        "concept": "Saviour",
+                        "expected_terms": ["savior"],
+                        "expected_evidence_ids": ["SAVIOR_EVID_1"],
                     },
                     {
                         "query_id": "live_law_fixture",
@@ -1367,12 +1400,12 @@ class SemanticSearchTests(unittest.TestCase):
             root = Path(tmp_name)
             history_path = root / "theologia_search" / "generated" / "gui_search_history.json"
 
-            history = gui.add_history_item([], "Animal soul")
+            history = gui.add_history_item([], "Saviour")
             history = gui.add_history_item(history, "live under law")
-            history = gui.add_history_item(history, "Animal soul")
+            history = gui.add_history_item(history, "Saviour")
             gui.save_history(history, history_path)
 
-            self.assertEqual(gui.load_history(history_path), ["Animal soul", "live under law"])
+            self.assertEqual(gui.load_history(history_path), ["Saviour", "live under law"])
             gui.clear_history(history_path)
             self.assertEqual(gui.load_history(history_path), [])
 
@@ -1395,14 +1428,13 @@ class SemanticSearchTests(unittest.TestCase):
             lexicon_path = write_fixture_lexicon(root)
             build_index.build_semantic_index(kb_dir=kb_dir, index_path=index_path, index_manifest_path=manifest_path)
 
-            output = gui.run_search("Animal soul", limit=3, index_path=index_path, lexicon_path=lexicon_path)
+            output = gui.run_search("Saviour", limit=3, index_path=index_path, lexicon_path=lexicon_path)
 
-            self.assertEqual(output.query, "Animal soul")
+            self.assertEqual(output.query, "Saviour")
             self.assertEqual(output.limit, 3)
             self.assertTrue(output.results)
-            self.assertEqual(output.results[0]["evidence_id"], "ANIMAL_SOUL_EVID_1")
+            self.assertEqual(output.results[0]["evidence_id"], "SAVIOR_EVID_1")
             self.assertTrue(output.discovered_phrases)
-            self.assertIn("animalis composed", output.discovered_phrases)
 
     def test_gui_search_adapter_can_return_period_groups(self):
         with temp_workspace() as tmp_name:
@@ -1422,7 +1454,7 @@ class SemanticSearchTests(unittest.TestCase):
             )
 
             self.assertTrue(output.period_groups)
-            self.assertGreaterEqual(len(output.results), 3)
+            self.assertGreaterEqual(len(output.results), 1)
             self.assertTrue(all(len(group["results"]) <= 1 for group in output.period_groups))
 
     def test_gui_result_fields_separate_labels_and_values(self):
@@ -1665,6 +1697,22 @@ class SemanticSearchTests(unittest.TestCase):
                 self.assertIn("AUGUSTINE_CYPRIAN_TESTIMONIES_EVID_1", [row["evidence_id"] for row in cyprian_results])
             finally:
                 con.close()
+
+    def test_author_option_lists_are_read_from_independent_sqlite_tables(self):
+        with temp_workspace() as tmp_name:
+            root = Path(tmp_name)
+            kb_dir = write_fixture_kb(root)
+            index_path = root / "theologia_search" / "generated" / "semantic_index.sqlite"
+            manifest_path = root / "theologia_search" / "generated" / "index_manifest.json"
+            build_index.build_semantic_index(kb_dir=kb_dir, index_path=index_path, index_manifest_path=manifest_path)
+
+            work_authors = set(gui.registered_author_names(index_path))
+            mentioned_authors = set(gui.registered_author_names(index_path, mentioned=True))
+
+            self.assertIn("Augustine of Hippo", work_authors)
+            self.assertNotIn("Origen", work_authors)
+            self.assertIn("Origen", mentioned_authors)
+            self.assertIn("Ambrose of Milan", mentioned_authors)
 
     def test_advanced_search_chapter_number_and_mixed_connectors(self):
         with temp_workspace() as tmp_name:

@@ -16,7 +16,6 @@ datas = [
     (str(PROJECT_ROOT / "assets"), "assets"),
     (str(PROJECT_ROOT / "generated" / "semantic_index.sqlite"), "generated"),
     (str(PROJECT_ROOT / "generated" / "index_manifest.json"), "generated"),
-    (str(PROJECT_ROOT / "concept_query_lexicon.json"), "."),
     (str(PROJECT_ROOT / "installer" / "README.txt"), "."),
     (str(PROJECT_ROOT / "CATALOG.txt"), "."),
     (str(PROJECT_ROOT / "license"), "license"),
@@ -25,7 +24,6 @@ datas = [
 hiddenimports = [
     "common",
     "gui",
-    "morphology",
     "periods",
     "search",
 ]

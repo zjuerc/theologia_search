@@ -14,7 +14,6 @@ def main() -> int:
     required = [
         payload / "TheologiaSearch.exe",
         resources / "README.txt",
-        resources / "concept_query_lexicon.json",
         resources / "assets" / "png",
         resources / "assets" / "fonts",
         resources / "license" / "LICENSE.txt",
@@ -31,6 +30,31 @@ def main() -> int:
         print("Missing packaged files:")
         print("\n".join(missing))
         return 1
+    obsolete_resources = [
+        resources / "concept_query_lexicon.json",
+        resources / "morphology_terms.json",
+        resources / "author_periods.json",
+    ]
+    present_obsolete = [str(path) for path in obsolete_resources if path.exists()]
+    if present_obsolete:
+        print("Obsolete packaged resources remain:")
+        print("\n".join(present_obsolete))
+        return 1
+    forbidden_names = {
+        "morphology.py",
+        "morphology_terms.json",
+        "concept_query_lexicon.json",
+        "author_periods.json",
+    }
+    packaged_forbidden = sorted(
+        str(path.relative_to(payload))
+        for path in payload.rglob("*")
+        if path.is_file() and path.name in forbidden_names
+    )
+    if packaged_forbidden:
+        print("Obsolete packaged files remain:")
+        print("\n".join(packaged_forbidden))
+        return 1
 
     manifest = json.loads((resources / "generated" / "index_manifest.json").read_text(encoding="utf-8"))
     with sqlite3.connect(resources / "generated" / "semantic_index.sqlite") as con:
@@ -38,6 +62,8 @@ def main() -> int:
         evidence_count = con.execute("SELECT COUNT(*) FROM evidence").fetchone()[0]
         source_count = con.execute("SELECT COUNT(*) FROM sources").fetchone()[0]
         author_count = con.execute("SELECT COUNT(*) FROM author_periods").fetchone()[0]
+        con.execute("SELECT author_norm FROM evidence_mentioned_authors LIMIT 1").fetchone()
+        tables = {row[0] for row in con.execute("SELECT name FROM sqlite_master WHERE type = 'table'")}
         con.execute("SELECT evidence_id FROM evidence LIMIT 1").fetchone()
     manifest_version = manifest.get("dataset_version")
     sqlite_version = metadata.get("dataset_version")
@@ -52,6 +78,10 @@ def main() -> int:
             "Dataset version mismatch: "
             f"manifest={manifest_version!r}, SQLite={sqlite_version!r}"
         )
+        return 1
+    forbidden_tables = {"morphology_forms", "evidence_morphology", "morphology_stats"}
+    if tables & forbidden_tables:
+        print(f"Obsolete morphology tables remain: {sorted(tables & forbidden_tables)}")
         return 1
     expected = {
         "evidence_count": evidence_count,

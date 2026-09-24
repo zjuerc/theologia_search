@@ -16,18 +16,17 @@ from itertools import product
 from pathlib import Path
 
 try:
-    from . import morphology
     from . import periods
     from .build_index import build_semantic_index
     from .common import (
         DEFAULT_INDEX_MANIFEST_PATH,
         DEFAULT_INDEX_PATH,
         DEFAULT_KB_DIR,
-        DEFAULT_LEXICON_PATH,
         SemanticSearchError,
         author_matches,
         configure_output,
         display_text,
+        grammatical_variants,
         make_fts_query,
         ngrams,
         norm_lookup,
@@ -35,25 +34,23 @@ try:
         resolve_source_ids,
         section_matches,
         significant_tokens,
-        singular_candidates,
         token_list,
     )
 except ImportError:  # pragma: no cover - supports direct script execution.
     import sys
 
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-    import morphology
     import periods
     from build_index import build_semantic_index
     from common import (
         DEFAULT_INDEX_MANIFEST_PATH,
         DEFAULT_INDEX_PATH,
         DEFAULT_KB_DIR,
-        DEFAULT_LEXICON_PATH,
         SemanticSearchError,
         author_matches,
         configure_output,
         display_text,
+        grammatical_variants,
         make_fts_query,
         ngrams,
         norm_lookup,
@@ -61,7 +58,6 @@ except ImportError:  # pragma: no cover - supports direct script execution.
         resolve_source_ids,
         section_matches,
         significant_tokens,
-        singular_candidates,
         token_list,
     )
 
@@ -408,11 +404,15 @@ def ordered_add(items: list[str], item: str) -> None:
 
 
 @lru_cache(maxsize=4)
-def load_lexicon(path: Path) -> dict:
+def load_lexicon(path: Path | None = None) -> dict:
+    """Load an explicitly supplied lexicon, or return the empty default."""
+    if path is None:
+        return {"schema_version": "1.0.0", "entries": [], "aliases": []}
     return read_json(path)
 
 
-def lexicon_entries(lexicon: dict) -> list[dict]:
+def lexicon_entries(lexicon: dict | None) -> list[dict]:
+    lexicon = lexicon or {}
     return list(lexicon.get("entries", [])) + list(lexicon.get("aliases", []))
 
 
@@ -440,11 +440,9 @@ def extract_direct_terms(concept: str, registered: set[str]) -> list[str]:
         if phrase in registered:
             ordered_add(direct, phrase)
     for token in tokens:
-        if token in registered:
-            ordered_add(direct, token)
-        for singular in singular_candidates(token):
-            if singular in registered:
-                ordered_add(direct, singular)
+        for variant in grammatical_variants(token):
+            if variant in registered:
+                ordered_add(direct, variant)
     return direct
 
 
@@ -458,42 +456,10 @@ def raw_query_terms(concept: str) -> list[str]:
 
 
 def mechanical_variants_for_token(token: str) -> list[str]:
-    variants: list[str] = []
     normalized = norm_lookup(token)
     if not normalized or normalized in LOW_SIGNAL_RAW_TERMS:
-        return variants
-
-    def add(value: str) -> None:
-        if value and value != normalized:
-            ordered_add(variants, value)
-
-    for singular in singular_candidates(normalized):
-        add(singular)
-
-    if normalized.endswith("ies") and len(normalized) > 4:
-        add(normalized[:-3] + "y")
-    elif normalized.endswith("y") and len(normalized) > 2:
-        add(normalized[:-1] + "ies")
-    elif not normalized.endswith("s"):
-        add(normalized + "s")
-
-    if normalized.endswith("e") and len(normalized) > 3:
-        add(normalized + "s")
-        add(normalized[:-1] + "ing")
-        add(normalized + "d")
-    elif normalized.endswith("ing") and len(normalized) > 5:
-        stem = normalized[:-3]
-        add(stem)
-        add(stem + "e")
-    elif normalized.endswith("ed") and len(normalized) > 4:
-        stem = normalized[:-2]
-        add(stem)
-        add(stem + "e")
-
-    if normalized.endswith("al") and len(normalized) > 4:
-        add(normalized + "is")
-
-    return variants[:6]
+        return []
+    return [variant for variant in grammatical_variants(normalized) if variant != normalized]
 
 
 def mechanical_variants_for_terms(terms: list[str]) -> dict[str, list[str]]:
@@ -587,37 +553,10 @@ def cooccurring_terms(
     return results
 
 
-def morphology_expansion(concept: str) -> tuple[list[str], dict[str, list[str]], dict[str, str]]:
-    matches = morphology.query_matches(concept, morphology.load_morphology())
-    morphology_terms: list[str] = []
-    morphology_forms: dict[str, list[str]] = defaultdict(list)
-    families_by_id: dict[str, list[morphology.MorphMatch]] = defaultdict(list)
-    active_families: dict[str, str] = {}
-
-    for match in matches:
-        if match.form != match.canonical and match.form not in morphology_forms[match.canonical]:
-            morphology_forms[match.canonical].append(match.form)
-        if match.kind == "lemma":
-            ordered_add(morphology_terms, match.canonical)
-        elif match.kind == "family":
-            families_by_id[match.family_id].append(match)
-
-    concept_norm = norm_lookup(concept)
-    for family_id, family_matches in families_by_id.items():
-        canonicals = {match.canonical for match in family_matches}
-        label = family_matches[0].family_label
-        if len(canonicals) >= 2 or (label and text_contains_phrase(concept_norm, label)):
-            active_families[family_id] = label
-            for canonical in sorted(canonicals):
-                ordered_add(morphology_terms, canonical)
-
-    return morphology_terms, dict(morphology_forms), active_families
-
-
 def expand_query(
     con: sqlite3.Connection,
     concept: str,
-    lexicon: dict,
+    lexicon: dict | None = None,
     *,
     include_cooccurrence: bool = True,
     stats: dict[str, dict] | None = None,
@@ -630,7 +569,11 @@ def expand_query(
     variants_by_term = mechanical_variants_for_terms(raw_terms)
     raw_phrases = query_phrases(concept)
     variant_phrases = variant_query_phrases(raw_phrases, variants_by_term)
-    morphology_terms, morphology_forms, morphology_families = morphology_expansion(concept)
+    # Kept as empty compatibility fields. Mechanical variants are handled
+    # centrally above and are not persisted as morphology data.
+    morphology_terms: list[str] = []
+    morphology_forms: dict[str, list[str]] = {}
+    morphology_families: dict[str, str] = {}
     expanded: list[str] = []
     sources: dict[str, list[str]] = defaultdict(list)
 
@@ -883,56 +826,6 @@ def fetch_candidate_ids(
             candidate_scores[row["evidence_id"]] = max(candidate_scores.get(row["evidence_id"], 0.0), float(row["term_rank"]))
             candidate_bm25.setdefault(row["evidence_id"], 0.0)
 
-    morphology_keys = list(expansion.morphology_terms)
-    morphology_family_ids = list(expansion.morphology_families)
-    morphology_is_redundant = bool(morphology_keys) and bool(registered_query_terms) and set(morphology_keys).issubset(
-        registered_query_terms
-    ) and not morphology_family_ids
-    if (morphology_keys or morphology_family_ids) and not morphology_is_redundant:
-        filters, filter_params = candidate_filter_sql(
-            source_ids=source_ids,
-            authors=authors,
-            mentioned_authors=mentioned_authors,
-            mentioned_authors_exact=mentioned_authors_exact,
-            section=section,
-            period_ids=period_ids,
-            scope_table=scope_table,
-        )
-        where = []
-        params: list[object] = []
-        if morphology_keys:
-            placeholders = ", ".join("?" for _ in morphology_keys)
-            where.append(f"em.canonical IN ({placeholders})")
-            params.extend(morphology_keys)
-        if morphology_family_ids:
-            placeholders = ", ".join("?" for _ in morphology_family_ids)
-            where.append(f"em.family_id IN ({placeholders})")
-            params.extend(morphology_family_ids)
-        query_where = ["(" + " OR ".join(where) + ")"] + filters
-        params.extend(filter_params)
-        params.append(candidate_limit)
-        rows = con.execute(
-            f"""
-            SELECT em.evidence_id,
-                   SUM(ms.idf * em.occurrence_count * em.weight) AS morphology_rank
-            FROM evidence_morphology em
-            JOIN morphology_stats ms
-              ON ms.canonical = em.canonical
-             AND ms.family_id = em.family_id
-             AND ms.kind = em.kind
-            JOIN evidence e ON e.evidence_id = em.evidence_id
-            WHERE {" AND ".join(query_where)}
-            GROUP BY em.evidence_id
-            ORDER BY morphology_rank DESC, em.evidence_id ASC
-            LIMIT ?
-            """,
-            params,
-        )
-        for row in rows:
-            rank = float(row["morphology_rank"] or 0.0) * 0.65
-            candidate_scores[row["evidence_id"]] = max(candidate_scores.get(row["evidence_id"], 0.0), rank)
-            candidate_bm25.setdefault(row["evidence_id"], 0.0)
-
     fts_query = make_fts_query(expansion.fts_terms, max_terms=32)
     raw_terms_registered = all(term in stats for term in expansion.raw_query_terms)
     use_fts_pass = bool(fts_query) and (not registered_query_terms or not raw_terms_registered)
@@ -1128,28 +1021,6 @@ def fetch_evidence_terms(con: sqlite3.Connection, evidence_ids: list[str]) -> di
             "idf": row["idf"],
         }
     return terms
-
-
-def fetch_evidence_morphology(con: sqlite3.Connection, evidence_ids: list[str]) -> dict[str, list[dict]]:
-    if not evidence_ids:
-        return {}
-    placeholders = ", ".join("?" for _ in evidence_ids)
-    matches: dict[str, list[dict]] = defaultdict(list)
-    for row in con.execute(
-        f"""
-        SELECT em.evidence_id, em.canonical, em.family_id, em.family_label, em.kind,
-               em.form, em.occurrence_count, em.weight, ms.idf
-        FROM evidence_morphology em
-        JOIN morphology_stats ms
-          ON ms.canonical = em.canonical
-         AND ms.family_id = em.family_id
-         AND ms.kind = em.kind
-        WHERE em.evidence_id IN ({placeholders})
-        """,
-        evidence_ids,
-    ):
-        matches[row["evidence_id"]].append(dict(row))
-    return matches
 
 
 def compile_snippet_regex(terms: list[str]) -> re.Pattern | None:
@@ -1528,7 +1399,6 @@ def score_candidate(
     row: dict,
     bm25_rank: float,
     terms: dict[str, dict],
-    morphology_matches: list[dict],
     expansion: QueryExpansion,
     stats: dict[str, dict],
 ) -> dict:
@@ -1565,19 +1435,8 @@ def score_candidate(
     raw_variant_matches = matched_raw_variants(expansion, heading_text, body_text)
     phrase_matches = raw_phrase_matches(expansion, heading_text, body_text)
     proximity = proximity_matches(expansion, matched_registered, heading_text, body_text)
-    active_morphology = []
-    active_family_ids = set(expansion.morphology_families)
-    active_terms = set(expansion.morphology_terms)
-    evidence_family_canonicals: dict[str, set[str]] = defaultdict(set)
-    for match in morphology_matches:
-        if match["family_id"] in active_family_ids and match["kind"] == "family":
-            evidence_family_canonicals[match["family_id"]].add(match["canonical"])
-    for match in morphology_matches:
-        if match["kind"] == "family":
-            if match["family_id"] in active_family_ids and len(evidence_family_canonicals[match["family_id"]]) >= 2:
-                active_morphology.append(match)
-        elif match["canonical"] in active_terms:
-            active_morphology.append(match)
+    matched_lemmas: list[str] = []
+    matched_term_families: list[str] = []
 
     heading_direct_bonus = 0.0
     heading_expanded_bonus = 0.0
@@ -1620,24 +1479,8 @@ def score_candidate(
         proximity_bonus += (14.0 if match["location"] == "heading" else 8.0) * closeness
     score_breakdown["proximity"] = min(32.0, proximity_bonus)
 
-    morphology_bonus = 0.0
-    matched_lemmas = []
-    matched_term_families = []
-    matched_morphology_forms: dict[str, list[str]] = defaultdict(list)
-    for match in active_morphology:
-        canonical = match["canonical"]
-        label = match["family_label"] or match["family_id"].replace("_", " ")
-        contribution = float(match["idf"]) * int(match["occurrence_count"]) * float(match["weight"])
-        if match["kind"] == "lemma":
-            morphology_bonus += contribution * 0.75
-            ordered_add(matched_lemmas, canonical)
-        else:
-            morphology_bonus += contribution * 0.55
-            if match["family_id"] in active_family_ids and label not in matched_term_families:
-                matched_term_families.append(label)
-        if match["form"] != canonical and match["form"] not in matched_morphology_forms[canonical]:
-            matched_morphology_forms[canonical].append(match["form"])
-    score_breakdown["morphology"] = min(18.0, morphology_bonus)
+    matched_morphology_forms: dict[str, list[str]] = {}
+    score_breakdown["morphology"] = 0.0
 
     matched_direct_terms = [term for term in matched_registered if term in direct_terms]
     distinct = len(matched_direct_terms)
@@ -1677,7 +1520,7 @@ def score_candidate(
             "raw_query": min(5.0, raw_bonus * 0.5),
             "raw_phrase": min(10.0, raw_phrase_bonus * 0.5),
             "proximity": min(8.0, proximity_bonus * 0.5),
-            "morphology": min(5.0, morphology_bonus * (5.0 / 18.0)),
+            "morphology": 0.0,
             "cooccurrence": min(2.0, cooccurrence_bonus * (2.0 / 12.0)),
             "fts": min(1.0, fts_bonus * 0.1),
             "common_only_penalty": common_only_penalty,
@@ -1721,10 +1564,6 @@ def score_candidate(
             ordered_add(highlight_terms, variant)
     for term in matched_registered or query_terms:
         ordered_add(highlight_terms, term)
-    for forms in matched_morphology_forms.values():
-        for form in forms:
-            ordered_add(highlight_terms, form)
-
     return {
         "source_id": row.get("source_id"),
         "source_title": row.get("source_title"),
@@ -1790,15 +1629,10 @@ def query_terms_fully_covered(result: dict, expansion: QueryExpansion) -> bool:
     matched_raw = set(result.get("matched_raw_terms") or [])
     matched_variants = result.get("matched_mechanical_variants") or {}
     matched_lemmas = set(result.get("matched_lemmas") or [])
-    matched_forms = set(result.get("matched_morphology_forms") or {})
     for raw_term in expansion.raw_query_terms:
         if raw_term in matched_raw or matched_variants.get(raw_term):
             continue
-        canonical_candidates = {raw_term}
-        for canonical, forms in expansion.morphology_forms.items():
-            if raw_term == canonical or raw_term in forms:
-                canonical_candidates.add(canonical)
-        if canonical_candidates.isdisjoint(matched_lemmas | matched_forms):
+        if raw_term not in matched_lemmas:
             return False
     return True
 
@@ -1814,10 +1648,6 @@ def query_has_unmatchable_term(
     for raw_term in expansion.raw_query_terms:
         supported_terms = [raw_term]
         supported_terms.extend(expansion.mechanical_variants.get(raw_term, []))
-        for canonical, forms in expansion.morphology_forms.items():
-            if raw_term == canonical or raw_term in forms:
-                supported_terms.append(canonical)
-                supported_terms.extend(forms)
         if any(term in stats for term in supported_terms):
             continue
         # A semantic lexicon entry may intentionally map a natural-language
@@ -1892,7 +1722,7 @@ def apply_clusters(results: list[dict]) -> None:
 def search_concept(
     con: sqlite3.Connection,
     concept: str,
-    lexicon: dict,
+    lexicon: dict | None = None,
     *,
     source_ids: set[str] | None = None,
     authors: list[str] | None = None,
@@ -1936,7 +1766,6 @@ def search_concept(
     evidence_ids = [evidence_id for evidence_id, _ in candidates]
     evidence_by_id = fetch_evidence(con, evidence_ids)
     terms_by_id = fetch_evidence_terms(con, evidence_ids)
-    morphology_by_id = fetch_evidence_morphology(con, evidence_ids)
     results = []
     for evidence_id, bm25_rank in candidates:
         row = evidence_by_id.get(evidence_id)
@@ -1956,7 +1785,6 @@ def search_concept(
             row,
             bm25_rank,
             terms_by_id.get(evidence_id, {}),
-            morphology_by_id.get(evidence_id, []),
             expansion,
             stats,
         )
@@ -2068,7 +1896,7 @@ def _metadata_only_result(row: dict, criteria: AdvancedSearchCriteria, field_mat
 def search_advanced(
     con: sqlite3.Connection,
     criteria: AdvancedSearchCriteria,
-    lexicon: dict,
+    lexicon: dict | None = None,
     *,
     limit: int = 20,
     candidate_limit: int = 100,
@@ -2328,7 +2156,7 @@ def search_advanced(
 def search_advanced_by_period(
     con: sqlite3.Connection,
     criteria: AdvancedSearchCriteria,
-    lexicon: dict,
+    lexicon: dict | None = None,
     *,
     limit: int = 20,
     candidate_limit: int = 100,
@@ -2372,7 +2200,7 @@ def search_advanced_by_period(
 def search_concept_by_period(
     con: sqlite3.Connection,
     concept: str,
-    lexicon: dict,
+    lexicon: dict | None = None,
     *,
     source_ids: set[str] | None = None,
     authors: list[str] | None = None,
@@ -2431,8 +2259,6 @@ def print_expansion(expansion: QueryExpansion) -> None:
     print("Expansion:")
     print(f"  direct_terms: {', '.join(expansion.direct_terms) or '(none)'}")
     print(f"  expanded_terms: {', '.join(expansion.expanded_terms) or '(none)'}")
-    print(f"  morphology_terms: {', '.join(expansion.morphology_terms) or '(none)'}")
-    print(f"  morphology_families: {', '.join(expansion.morphology_families.values()) or '(none)'}")
     print(f"  fts_terms: {', '.join(expansion.fts_terms) or '(none)'}")
 
 
@@ -2451,14 +2277,6 @@ def print_query_plan(expansion: QueryExpansion) -> None:
         print(f"  variant_phrases_more: {len(expansion.variant_phrases) - 16}")
     print(f"  direct_terms: {', '.join(expansion.direct_terms) or '(none)'}")
     print(f"  expanded_terms: {', '.join(expansion.expanded_terms) or '(none)'}")
-    print(f"  morphology_terms: {', '.join(expansion.morphology_terms) or '(none)'}")
-    if expansion.morphology_forms:
-        form_bits = [
-            f"{term}: {', '.join(forms)}"
-            for term, forms in sorted(expansion.morphology_forms.items())
-        ]
-        print(f"  morphology_forms: {'; '.join(form_bits)}")
-    print(f"  morphology_families: {', '.join(expansion.morphology_families.values()) or '(none)'}")
     print(f"  fts_terms: {', '.join(expansion.fts_terms) or '(none)'}")
 
 
@@ -2693,7 +2511,7 @@ def build_parser() -> argparse.ArgumentParser:
         default=DEFAULT_INDEX_MANIFEST_PATH,
         help="Generated index manifest path.",
     )
-    parser.add_argument("--lexicon", type=Path, default=DEFAULT_LEXICON_PATH, help="Curated query lexicon path.")
+    parser.add_argument("--lexicon", type=Path, default=None, help="Optional external lexicon path.")
     parser.add_argument(
         "--layer",
         choices=["primary", "extended", "archival", "all"],

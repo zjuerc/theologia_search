@@ -14,11 +14,9 @@ from pathlib import Path
 from tkinter import messagebox, ttk
 
 try:
-    from . import periods
     from .common import (
         DEFAULT_GUI_HISTORY_PATH,
         DEFAULT_INDEX_PATH,
-        DEFAULT_LEXICON_PATH,
         SemanticSearchError,
         configure_output,
         display_text,
@@ -40,11 +38,9 @@ except ImportError:  # pragma: no cover - supports direct script execution.
     import sys
 
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-    import periods
     from common import (
         DEFAULT_GUI_HISTORY_PATH,
         DEFAULT_INDEX_PATH,
-        DEFAULT_LEXICON_PATH,
         SemanticSearchError,
         configure_output,
         display_text,
@@ -68,8 +64,21 @@ DEFAULT_LIMIT = 10
 MAX_HISTORY_ITEMS = 100
 
 
-def registered_author_names() -> tuple[str, ...]:
-    return periods.registered_author_names()
+def registered_author_names(index_path: Path = DEFAULT_INDEX_PATH, *, mentioned: bool = False) -> tuple[str, ...]:
+    """Return author choices directly from the SQLite evidence index."""
+    if not index_path.exists():
+        return ()
+    table = "evidence_mentioned_authors" if mentioned else "evidence"
+    try:
+        with sqlite3.connect(str(index_path)) as con:
+            rows = con.execute(
+                f"SELECT DISTINCT author, author_norm FROM {table} "
+                "WHERE author IS NOT NULL AND trim(author) <> '' "
+                "ORDER BY author COLLATE NOCASE"
+            ).fetchall()
+    except sqlite3.Error as exc:
+        raise SemanticSearchError(f"cannot load author choices from SQLite: {exc}") from exc
+    return tuple(row[0] for row in rows if display_text(row[0]) and display_text(row[1]))
 
 
 @dataclass
@@ -335,7 +344,7 @@ def run_search(
     *,
     limit: int = DEFAULT_LIMIT,
     index_path: Path = DEFAULT_INDEX_PATH,
-    lexicon_path: Path = DEFAULT_LEXICON_PATH,
+    lexicon_path: Path | None = None,
     period_sections: bool = False,
 ) -> SearchOutput:
     concept = display_text(query)
@@ -391,7 +400,7 @@ def run_advanced_search(
     *,
     limit: int = DEFAULT_LIMIT,
     index_path: Path = DEFAULT_INDEX_PATH,
-    lexicon_path: Path = DEFAULT_LEXICON_PATH,
+    lexicon_path: Path | None = None,
     period_sections: bool = True,
 ) -> SearchOutput:
     criteria = validate_advanced_criteria(criteria)
@@ -558,7 +567,7 @@ def context_rows_to_text(context: ContextOutput) -> str:
 
 
 def context_keywords(row: dict | None) -> list[str]:
-    """Return literal query terms and confirmed morphology forms for highlighting."""
+    """Return literal query terms and mechanical matches for highlighting."""
     if not row:
         return []
     values: set[str] = set()
@@ -569,11 +578,6 @@ def context_keywords(row: dict | None) -> list[str]:
     for value in row.get("matched_lemmas") or []:
         for term in re.split(r"\s*->\s*", display_value(value)):
             term = term.strip()
-            if term:
-                values.add(term)
-    for forms in (row.get("matched_morphology_forms") or {}).values():
-        for value in forms or []:
-            term = display_value(value).strip()
             if term:
                 values.add(term)
     return sorted(values, key=lambda value: (-len(value), value.casefold()))
@@ -589,7 +593,7 @@ class AdvancedSearchDialog(tk.Toplevel):
         ("After Reformation", "post_reformation"),
     )
 
-    def __init__(self, parent: tk.Misc, on_submit) -> None:
+    def __init__(self, parent: tk.Misc, on_submit, index_path: Path = DEFAULT_INDEX_PATH) -> None:
         super().__init__(parent)
         self.on_submit = on_submit
         self.title("Advanced Search")
@@ -640,7 +644,7 @@ class AdvancedSearchDialog(tk.Toplevel):
                 author = ttk.Combobox(
                     form,
                     textvariable=variable,
-                    values=("All authors",) + registered_author_names(),
+                    values=("All authors",) + registered_author_names(index_path, mentioned=field == "mentioned_author"),
                     state="readonly",
                 )
                 author.current(0)
@@ -687,7 +691,7 @@ class SemanticSearchApp:
         *,
         history_path: Path = DEFAULT_GUI_HISTORY_PATH,
         index_path: Path = DEFAULT_INDEX_PATH,
-        lexicon_path: Path = DEFAULT_LEXICON_PATH,
+        lexicon_path: Path | None = None,
     ):
         self.root = root
         self.history_path = history_path
@@ -866,7 +870,7 @@ class SemanticSearchApp:
     def open_advanced_search(self) -> None:
         if self.search_running:
             return
-        AdvancedSearchDialog(self.root, self.start_advanced_search)
+        AdvancedSearchDialog(self.root, self.start_advanced_search, self.index_path)
 
     def start_advanced_search(self, criteria: AdvancedSearchCriteria) -> None:
         if self.search_running:

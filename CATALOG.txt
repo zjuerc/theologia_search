@@ -12,8 +12,6 @@ Indexed source volumes: 287
 Source volumes with evidence: 277
 Evidence records: 118242
 Registered search terms: 882
-Morphology forms: 31
-Morphology evidence matches: 326782
 Mentioned-author evidence links: 5061
 Distinct mentioned authors: 60
 

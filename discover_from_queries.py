@@ -17,7 +17,6 @@ try:
         DEFAULT_DISCOVERY_JSONL_PATH,
         DEFAULT_EVALUATION_QUERIES_PATH,
         DEFAULT_INDEX_PATH,
-        DEFAULT_LEXICON_PATH,
         SemanticSearchError,
         configure_output,
         display_text,
@@ -34,7 +33,6 @@ except ImportError:  # pragma: no cover - supports direct script execution.
         DEFAULT_DISCOVERY_JSONL_PATH,
         DEFAULT_EVALUATION_QUERIES_PATH,
         DEFAULT_INDEX_PATH,
-        DEFAULT_LEXICON_PATH,
         SemanticSearchError,
         configure_output,
         display_text,
@@ -190,7 +188,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--concept", nargs="+", help="One concept query to inspect.")
     parser.add_argument("--queries", type=Path, default=None, help="JSONL file containing concept/query rows.")
     parser.add_argument("--index", type=Path, default=DEFAULT_INDEX_PATH, help="SQLite semantic index path.")
-    parser.add_argument("--lexicon", type=Path, default=DEFAULT_LEXICON_PATH, help="Curated query lexicon path.")
+    parser.add_argument("--lexicon", type=Path, default=None, help="Optional external lexicon path.")
     parser.add_argument("--limit", type=int, default=20, help="Search results to inspect per query.")
     parser.add_argument("--candidate-limit", type=int, default=100, help="Internal search candidate pool size.")
     parser.add_argument("--jsonl-out", type=Path, default=DEFAULT_DISCOVERY_JSONL_PATH, help="Review JSONL output path.")

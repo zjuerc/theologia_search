@@ -19,6 +19,27 @@ Write-Host "Checking the source index..."
 & $PythonExe -c "import json,sqlite3,sys; m=json.load(open(sys.argv[1],encoding='utf-8')); c=sqlite3.connect(sys.argv[2]); assert c.execute('select count(*) from evidence').fetchone()[0] == m['evidence_count']; assert c.execute('select count(*) from author_periods').fetchone()[0] == m['author_period_count']; print('Source index verified')" $manifest $index
 if ($LASTEXITCODE -ne 0) { throw "Source index validation failed." }
 
+$sourcePolicyCheck = @'
+import json
+import sqlite3
+import sys
+from pathlib import Path
+
+manifest_path, index_path, project_root = map(Path, sys.argv[1:])
+manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+for key in ("morphology_config_digest", "morphology_schema_version", "morphology_form_count", "morphology_match_count"):
+    assert key not in manifest, f"obsolete manifest field: {key}"
+for name in ("morphology.py", "morphology_terms.json", "concept_query_lexicon.json", "author_periods.json"):
+    assert not (project_root / name).exists(), f"obsolete source resource exists: {name}"
+with sqlite3.connect(index_path) as con:
+    tables = {row[0] for row in con.execute("SELECT name FROM sqlite_master WHERE type = 'table'")}
+    assert not tables.intersection({"morphology_forms", "evidence_morphology", "morphology_stats"}), "obsolete morphology table present"
+    con.execute("SELECT author_norm FROM evidence_mentioned_authors LIMIT 1").fetchone()
+print("Source packaging policy verified")
+'@
+& $PythonExe -c $sourcePolicyCheck $manifest $index $ProjectRoot
+if ($LASTEXITCODE -ne 0) { throw "Source packaging policy validation failed." }
+
 Remove-Item -Recurse -Force (Join-Path $ProjectRoot "build\TheologiaSearch") -ErrorAction SilentlyContinue
 Remove-Item -Recurse -Force (Join-Path $ProjectRoot "dist\TheologiaSearch") -ErrorAction SilentlyContinue
 Remove-Item -Recurse -Force (Join-Path $ProjectRoot "release") -ErrorAction SilentlyContinue

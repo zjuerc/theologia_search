@@ -15,7 +15,6 @@ try:
         DEFAULT_EVALUATION_REPORT_JSON_PATH,
         DEFAULT_EVALUATION_REPORT_MD_PATH,
         DEFAULT_INDEX_PATH,
-        DEFAULT_LEXICON_PATH,
         SemanticSearchError,
         configure_output,
         display_text,
@@ -33,7 +32,6 @@ except ImportError:  # pragma: no cover - supports direct script execution.
         DEFAULT_EVALUATION_REPORT_JSON_PATH,
         DEFAULT_EVALUATION_REPORT_MD_PATH,
         DEFAULT_INDEX_PATH,
-        DEFAULT_LEXICON_PATH,
         SemanticSearchError,
         configure_output,
         display_text,
@@ -96,9 +94,13 @@ def evaluate_query(con: sqlite3.Connection, lexicon: dict, query: dict, *, limit
     top_evidence_ids = [row.get("evidence_id") for row in results]
     top_source_ids = [row.get("source_id") for row in results]
     matched_terms = set()
+    matched_terms.update(norm_lookup(term) for term in expansion.expanded_terms or [])
     for row in results:
         matched_terms.update(norm_lookup(term) for term in row.get("matched_registered_terms") or [])
         matched_terms.update(norm_lookup(term) for term in row.get("matched_raw_terms") or [])
+        for lemma, forms in (row.get("matched_morphology_forms") or {}).items():
+            matched_terms.add(norm_lookup(lemma))
+            matched_terms.update(norm_lookup(form) for form in forms or [])
 
     evidence_hit = not expected_evidence_ids or bool(expected_evidence_ids & set(top_evidence_ids))
     term_hit = not expected_terms or bool(expected_terms & matched_terms)
@@ -146,7 +148,7 @@ def evaluate_query(con: sqlite3.Connection, lexicon: dict, query: dict, *, limit
 def evaluate_search(
     *,
     index_path: Path = DEFAULT_INDEX_PATH,
-    lexicon_path: Path = DEFAULT_LEXICON_PATH,
+    lexicon_path: Path | None = None,
     queries_path: Path = DEFAULT_EVALUATION_QUERIES_PATH,
     json_out: Path = DEFAULT_EVALUATION_REPORT_JSON_PATH,
     markdown_out: Path = DEFAULT_EVALUATION_REPORT_MD_PATH,
@@ -211,7 +213,7 @@ def write_markdown_report(path: Path, report: dict) -> None:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Evaluate Theologia Search retrieval quality.")
     parser.add_argument("--index", type=Path, default=DEFAULT_INDEX_PATH, help="SQLite semantic index path.")
-    parser.add_argument("--lexicon", type=Path, default=DEFAULT_LEXICON_PATH, help="Curated query lexicon path.")
+    parser.add_argument("--lexicon", type=Path, default=None, help="Optional external lexicon path.")
     parser.add_argument("--queries", type=Path, default=DEFAULT_EVALUATION_QUERIES_PATH, help="Evaluation JSONL path.")
     parser.add_argument("--json-out", type=Path, default=DEFAULT_EVALUATION_REPORT_JSON_PATH, help="JSON report output path.")
     parser.add_argument("--markdown-out", type=Path, default=DEFAULT_EVALUATION_REPORT_MD_PATH, help="Markdown report output path.")

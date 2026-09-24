@@ -23,13 +23,13 @@ except ModuleNotFoundError as exc:  # pragma: no cover - depends on optional GUI
 try:
     from . import periods
     from . import gui as core_gui
-    from .common import DEFAULT_GUI_HISTORY_PATH, DEFAULT_INDEX_PATH, DEFAULT_LEXICON_PATH, configure_output, display_text
+    from .common import DEFAULT_GUI_HISTORY_PATH, DEFAULT_INDEX_PATH, configure_output, display_text
     from .search import AdvancedSearchCriteria, validate_advanced_criteria
 except ImportError:  # pragma: no cover - supports direct script execution.
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     import periods
     import gui as core_gui
-    from common import DEFAULT_GUI_HISTORY_PATH, DEFAULT_INDEX_PATH, DEFAULT_LEXICON_PATH, configure_output, display_text
+    from common import DEFAULT_GUI_HISTORY_PATH, DEFAULT_INDEX_PATH, configure_output, display_text
     from search import AdvancedSearchCriteria, validate_advanced_criteria
 
 
@@ -613,8 +613,9 @@ class AdvancedSearchDialog(QtWidgets.QDialog):
         ("After Reformation", "post_reformation"),
     )
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, index_path: Path = DEFAULT_INDEX_PATH):
         super().__init__(parent)
+        self.index_path = index_path
         self.criteria: AdvancedSearchCriteria | None = None
         self.setObjectName("AdvancedSearchDialog")
         self.setWindowTitle("Advanced Search")
@@ -689,7 +690,9 @@ class AdvancedSearchDialog(QtWidgets.QDialog):
             elif field in {"author", "mentioned_author"}:
                 widget = QtWidgets.QComboBox()
                 widget.addItem("All authors", "")
-                for author_name in periods.registered_author_names():
+                for author_name in core_gui.registered_author_names(
+                    self.index_path, mentioned=field == "mentioned_author"
+                ):
                     widget.addItem(author_name, author_name)
             else:
                 widget = QtWidgets.QLineEdit()
@@ -766,7 +769,7 @@ class SearchWorker(QtCore.QObject):
         self.criteria = criteria
         self.limit = limit
         self.index_path = index_path or DEFAULT_INDEX_PATH
-        self.lexicon_path = lexicon_path or DEFAULT_LEXICON_PATH
+        self.lexicon_path = lexicon_path
         self.period_sections = period_sections
 
     @QtCore.Slot()
@@ -1125,7 +1128,7 @@ class TheologiaSearchWindow(QtWidgets.QMainWindow):
         *,
         history_path: Path = DEFAULT_GUI_HISTORY_PATH,
         index_path: Path = DEFAULT_INDEX_PATH,
-        lexicon_path: Path = DEFAULT_LEXICON_PATH,
+        lexicon_path: Path | None = None,
     ):
         super().__init__()
         self.history_path = history_path
@@ -1472,7 +1475,7 @@ class TheologiaSearchWindow(QtWidgets.QMainWindow):
     def open_advanced_search(self) -> None:
         if self.thread is not None:
             return
-        dialog = AdvancedSearchDialog(self)
+        dialog = AdvancedSearchDialog(self, self.index_path)
         if dialog.exec() != QtWidgets.QDialog.DialogCode.Accepted or dialog.criteria is None:
             return
         self.start_advanced_search(dialog.criteria)
@@ -1586,8 +1589,6 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if not DEFAULT_INDEX_PATH.exists():
             raise RuntimeError(f"The search database is missing:\n{DEFAULT_INDEX_PATH}")
-        if not DEFAULT_LEXICON_PATH.exists():
-            raise RuntimeError(f"The search configuration is missing:\n{DEFAULT_LEXICON_PATH}")
         with sqlite3.connect(str(DEFAULT_INDEX_PATH)) as con:
             con.execute("SELECT evidence_id FROM evidence LIMIT 1").fetchone()
     except (OSError, sqlite3.DatabaseError, RuntimeError) as exc:

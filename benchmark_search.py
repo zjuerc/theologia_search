@@ -325,7 +325,7 @@ def main() -> int:
         sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description="Run the comprehensive Theologia search audit.")
     parser.add_argument("--index", type=Path, default=Path("generated/semantic_index.sqlite"))
-    parser.add_argument("--lexicon", type=Path, default=Path("concept_query_lexicon.json"))
+    parser.add_argument("--lexicon", type=Path, default=None, help="Optional external lexicon path.")
     parser.add_argument("--limit", type=int, default=10, help="Results per historical period.")
     parser.add_argument("--repeats", type=int, default=2)
     parser.add_argument("--case", action="append", dest="case_names", help="Run only this case name; repeat for multiple cases.")

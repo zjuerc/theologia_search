@@ -38,6 +38,14 @@ The current primary index contains:
 
 For a complete author and volume listing, see [CATALOG.txt](CATALOG.txt).
 
+### External knowledge base
+
+The source knowledge base is maintained separately in the
+[Christian Theology Knowledge Base repository](https://github.com/zjuerc/christianity_knowledge_base).
+Download the latest generated KB release from its
+[GitHub Releases page](https://github.com/zjuerc/christianity_knowledge_base/releases/latest)
+when rebuilding the SQLite index or working with the source evidence.
+
 ### What users receive
 
 Users receive ranked evidence passages with source title, author, heading,

@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sqlite3
 import sys
 from dataclasses import dataclass
@@ -12,6 +13,7 @@ from pathlib import Path
 try:
     from . import periods
     from .build_index import SEMANTIC_INDEX_SCHEMA_VERSION, build_semantic_index
+    from .pagination import DISPLAY_LABELS, migrate_index, read_location_rows
     from .common import (
         DEFAULT_INDEX_MANIFEST_PATH,
         DEFAULT_INDEX_PATH,
@@ -28,6 +30,7 @@ except ImportError:  # pragma: no cover - supports direct script execution.
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     import periods
     from build_index import SEMANTIC_INDEX_SCHEMA_VERSION, build_semantic_index
+    from pagination import DISPLAY_LABELS, migrate_index, read_location_rows
     from common import (
         DEFAULT_INDEX_MANIFEST_PATH,
         DEFAULT_INDEX_PATH,
@@ -77,7 +80,7 @@ def kb_snapshot(kb_dir: Path, layer: str, index_path: Path | None = None) -> dic
     manifest = load_manifest(kb_dir)
     if layer not in set(EVIDENCE_KEYS) | {"all"}:
         raise SemanticSearchError(f"unknown evidence layer: {layer}")
-    return {
+    snapshot = {
         "kb_dir": str(kb_dir),
         "semantic_index_schema_version": SEMANTIC_INDEX_SCHEMA_VERSION,
         "author_period_schema_version": periods.AUTHOR_PERIOD_SCHEMA_VERSION,
@@ -88,6 +91,19 @@ def kb_snapshot(kb_dir: Path, layer: str, index_path: Path | None = None) -> dic
         "layer": layer,
         "evidence_count": expected_evidence_count(manifest, kb_dir, layer),
     }
+    if manifest.get("pagination"):
+        extension = manifest["pagination"]
+        snapshot.update(pagination_schema_version=extension["schema_version"],
+                        pagination_sha256=extension["sha256"], pagination_page_count=extension["page_count"])
+        snapshot["pagination_display_labels"] = extension.get("display_labels", DISPLAY_LABELS)
+        # Verify registered data rather than trusting the manifest alone.
+        try:
+            count = sum(1 for _ in read_location_rows(kb_dir, manifest))
+        except (ValueError, OSError) as exc:
+            raise SemanticSearchError(str(exc)) from exc
+        if count != extension["page_count"]:
+            raise SemanticSearchError("Pagination file page count mismatch")
+    return snapshot
 
 
 def read_index_manifest(path: Path) -> dict | None:
@@ -105,6 +121,8 @@ def read_sqlite_metadata(index_path: Path) -> dict | None:
             metadata = dict(con.execute("SELECT key, value FROM metadata").fetchall())
             metadata["actual_evidence_count"] = str(con.execute("SELECT COUNT(*) FROM evidence").fetchone()[0])
             metadata["actual_term_count"] = str(con.execute("SELECT COUNT(*) FROM term_stats").fetchone()[0])
+            if con.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='page_locations'").fetchone():
+                metadata["actual_pagination_page_count"] = str(con.execute("SELECT COUNT(*) FROM page_locations").fetchone()[0])
             return metadata
     except sqlite3.Error as exc:
         raise SemanticSearchError(f"cannot read SQLite index metadata: {exc}") from exc
@@ -194,6 +212,24 @@ def check_index_sync(
         ):
             compare_values(f"manifest vs SQLite {key}", manifest.get(key), sqlite_metadata.get(key), messages)
 
+    if snapshot.get("pagination_sha256"):
+        pagination = (manifest or {}).get("pagination", {})
+        for key, field in [("pagination_schema_version", "schema_version"),
+                           ("pagination_sha256", "sha256"), ("pagination_page_count", "page_count")]:
+            compare_values(key, snapshot[key], pagination.get(field), messages)
+            compare_values(f"SQLite {key}", snapshot[key], (sqlite_metadata or {}).get(key), messages)
+        compare_values("SQLite actual pagination rows", snapshot["pagination_page_count"],
+                       (sqlite_metadata or {}).get("actual_pagination_page_count"), messages)
+        expected_labels = snapshot["pagination_display_labels"]
+        if pagination.get("display_labels", DISPLAY_LABELS) != expected_labels:
+            messages.append("Index manifest pagination display labels differ from KB")
+        try:
+            stored_labels = json.loads((sqlite_metadata or {}).get("pagination_display_labels") or "null")
+        except (ValueError, TypeError):
+            stored_labels = None
+        if stored_labels != expected_labels:
+            messages.append("SQLite pagination display labels differ from KB")
+
     return SyncReport(
         synced=not messages,
         messages=messages,
@@ -238,6 +274,10 @@ def build_parser() -> argparse.ArgumentParser:
         help="Evidence layer expected in the index. Default: primary.",
     )
     parser.add_argument(
+        "--sync-pagination", action="store_true",
+        help="Migrate pagination metadata only; never rebuild evidence or search indexes.",
+    )
+    parser.add_argument(
         "--sync",
         action="store_true",
         help="Rebuild the SQLite index when it is missing or out of sync.",
@@ -260,8 +300,14 @@ def main(argv: list[str] | None = None) -> int:
         print_report(report)
         if report.synced:
             return 0
+        if args.sync_pagination:
+            migrate_index(args.kb_dir, args.index, args.index_manifest)
+            final_report = check_index_sync(kb_dir=args.kb_dir, index_path=args.index,
+                                            index_manifest_path=args.index_manifest, layer=args.layer)
+            print_report(final_report)
+            return 0 if final_report.synced else 1
         if not args.sync:
-            print("Run with --sync to rebuild the index.")
+            print("For pagination-only updates, run with --sync-pagination. Core data changes require --sync.")
             return 1
 
         print("Sync requested: rebuilding SQLite index...")
@@ -284,7 +330,7 @@ def main(argv: list[str] | None = None) -> int:
         )
         print_report(final_report)
         return 0 if final_report.synced else 1
-    except SemanticSearchError as exc:
+    except (SemanticSearchError, ValueError, OSError, sqlite3.Error) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
 

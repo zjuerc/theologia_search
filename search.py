@@ -16,6 +16,7 @@ from itertools import product
 from pathlib import Path
 
 try:
+    from .pagination import attach_page_locations, format_page_locations
     from . import periods
     from .build_index import build_semantic_index
     from .common import (
@@ -40,6 +41,7 @@ except ImportError:  # pragma: no cover - supports direct script execution.
     import sys
 
     sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from pagination import attach_page_locations, format_page_locations
     import periods
     from build_index import build_semantic_index
     from common import (
@@ -1804,6 +1806,7 @@ def search_concept(
     results = results[:limit]
     if cluster_results:
         apply_clusters(results)
+    attach_page_locations(con, results)
     return results, expansion
 
 
@@ -2117,7 +2120,7 @@ def search_advanced(
                 row.get("evidence_id") or "",
             )
         )
-        return results[:limit], expansion
+        return attach_page_locations(con, results[:limit]), expansion
 
     rows = [
         dict(row) for row in (
@@ -2150,7 +2153,7 @@ def search_advanced(
             row.get("evidence_id") or "",
         )
     )
-    return results[:limit], None
+    return attach_page_locations(con, results[:limit]), None
 
 
 def search_advanced_by_period(
@@ -2417,10 +2420,10 @@ def print_period_jsonl(
 def print_readable_row(index: int, row: dict, args: argparse.Namespace) -> None:
     print()
     author = row.get("author") or "Unknown"
-    page = row.get("page_number")
+    page = format_page_locations(row)
     score = row.get("concept_score")
     quality = row.get("quality_label") or row.get("match_quality") or "unknown"
-    print(f"{index}. {row.get('source_id')} p.{page} | {author} | {row.get('evidence_id')} | score: {score} | quality: {quality}")
+    print(f"{index}. {row.get('source_id')} | {page} | {author} | {row.get('evidence_id')} | score: {score} | quality: {quality}")
     if row.get("source_title"):
         print(f"   {row['source_title']}")
     if row.get("author_period_label"):

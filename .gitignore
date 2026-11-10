@@ -10,3 +10,4 @@ build/
 dist/
 release/
 release/*.exe
+pagination_backup/

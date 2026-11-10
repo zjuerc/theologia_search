@@ -14,6 +14,7 @@ from pathlib import Path
 from tkinter import messagebox, ttk
 
 try:
+    from .pagination import attach_page_locations, format_page_locations
     from .common import (
         DEFAULT_GUI_HISTORY_PATH,
         DEFAULT_INDEX_PATH,
@@ -38,6 +39,7 @@ except ImportError:  # pragma: no cover - supports direct script execution.
     import sys
 
     sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from pagination import attach_page_locations, format_page_locations
     from common import (
         DEFAULT_GUI_HISTORY_PATH,
         DEFAULT_INDEX_PATH,
@@ -255,14 +257,15 @@ def display_value(value, fallback: str = "") -> str:
 
 
 def result_fields(index: int, row: dict) -> list[tuple[str, str, str]]:
-    page = display_value(row.get("page_number"), "unknown")
+    page = format_page_locations(row)
     quality = display_value(row.get("quality_label") or row.get("match_quality"), "unknown")
-    title = f"{index}. {display_value(row.get('source_id'), 'unknown source')} p.{page}"
+    title = f"{index}. {display_value(row.get('source_id'), 'unknown source')}"
     heading = display_value(row.get("heading") or row.get("outline_path"))
     fields = [
         ("title", "", title),
         ("field", "Source", display_value(row.get("source_title") or row.get("source_id"), "unknown")),
         ("field", "Author", display_value(row.get("author"), "Unknown")),
+        ("field", "Pages", page),
     ]
     if row.get("mentioned_authors"):
         fields.append(("field", "Mentioned", ", ".join(row["mentioned_authors"])))
@@ -274,15 +277,29 @@ def result_fields(index: int, row: dict) -> list[tuple[str, str, str]]:
     return fields
 
 
+def citation_text(row: dict) -> str:
+    parts = [display_value(row.get("author"), "Unknown"),
+             display_value(row.get("source_title") or row.get("source_id"), "Unknown source")]
+    if row.get("heading") or row.get("outline_path"):
+        parts.append(display_value(row.get("heading") or row.get("outline_path")))
+    parts.extend([format_page_locations(row), display_value(row.get("evidence_id"), "unknown evidence")])
+    return "[" + "; ".join(parts) + "]"
+
+
+def format_pdf_file_range(page_range: str) -> str:
+    label = "PDF file pages" if "-" in page_range or "–" in page_range else "PDF file page"
+    return f"{label}: {page_range}"
+
+
 def result_explanation_lines(row: dict) -> list[tuple[str, str]]:
     score_breakdown = row.get("score_breakdown") or {}
-    page = display_value(row.get("page_number"), "unknown")
+    page = format_page_locations(row)
     lines = [
         ("Source", display_value(row.get("source_title") or row.get("source_id"), "unknown")),
         ("Author", display_value(row.get("author"), "Unknown")),
         ("Mentioned authors", ", ".join(row.get("mentioned_authors") or []) or "none"),
         ("Heading", display_value(row.get("heading") or row.get("outline_path"), "unknown")),
-        ("Page", page),
+        ("Page locations", page),
         ("Evidence", display_value(row.get("evidence_id"), "unknown")),
         ("Period", display_value(row.get("author_period_label"), "unknown")),
         ("Period basis", display_value(row.get("author_period_source"), "unknown")),
@@ -473,6 +490,8 @@ def fetch_context(
                 (source_id,),
             )
         ]
+        attach_page_locations(con, source_rows)
+        selected = next(row for row in source_rows if row["evidence_id"] == evidence_id)
     finally:
         con.close()
 
@@ -548,7 +567,9 @@ def context_rows_to_text(context: ContextOutput) -> str:
         selected_id = context.selected.get("evidence_id")
         for row in context.rows:
             if row.get("evidence_id") == selected_id:
-                parts.append("[SELECTED EVIDENCE]")
+                parts.append(f"[SELECTED EVIDENCE] {row.get('evidence_id')} | {format_page_locations(row)}")
+            else:
+                parts.append(f"[NEARBY EVIDENCE] {row.get('evidence_id')} | {format_page_locations(row)}")
             parts.append(clean_display_text(row.get("verbatim_text")))
         return "\n".join(parts)
 
@@ -560,8 +581,8 @@ def context_rows_to_text(context: ContextOutput) -> str:
         else:
             marker = "NEARBY EVIDENCE"
         heading = display_value(row.get("heading") or row.get("outline_path"), "no heading")
-        page = display_value(row.get("page_number"), "unknown")
-        parts.append(f"[{marker}] {row.get('evidence_id')} | p.{page} | {heading}")
+        page = format_page_locations(row)
+        parts.append(f"[{marker}] {row.get('evidence_id')} | {page} | {heading}")
         parts.append(clean_display_text(row.get("verbatim_text")))
     return "\n\n".join(parts)
 
@@ -1052,7 +1073,7 @@ class SemanticSearchApp:
         evidence_id = display_value(selected.get("evidence_id"), "unknown evidence")
 
         popup = tk.Toplevel(self.root)
-        popup.title(f"{source_id} p.{context.page_range} | {evidence_id} | {context.heading}")
+        popup.title(f"{source_id} | {format_pdf_file_range(context.page_range)} | {evidence_id} | {context.heading}")
         popup.geometry("960x720")
         popup.minsize(700, 480)
         popup.columnconfigure(0, weight=1)
@@ -1065,7 +1086,8 @@ class SemanticSearchApp:
         self._insert_popup_field(meta, "Source", source_id)
         self._insert_popup_field(meta, "Title", display_value(selected.get("source_title"), "unknown"))
         self._insert_popup_field(meta, "Author", display_value(selected.get("author"), "Unknown"))
-        self._insert_popup_field(meta, "Page range", context.page_range)
+        self._insert_popup_field(meta, "Context page range", format_pdf_file_range(context.page_range))
+        self._insert_popup_field(meta, "Selected evidence pages", format_page_locations(selected))
         self._insert_popup_field(meta, "Evidence", evidence_id)
         self._insert_popup_field(meta, "Heading", context.heading)
         if context.mode == "chapter":
@@ -1077,6 +1099,10 @@ class SemanticSearchApp:
 
         font_controls = ttk.Frame(popup)
         font_controls.grid(row=1, column=0, sticky="e", padx=10, pady=(0, 6))
+        def copy_citation():
+            popup.clipboard_clear()
+            popup.clipboard_append(citation_text(selected))
+        ttk.Button(font_controls, text="Copy citation", command=copy_citation).pack(side=tk.LEFT, padx=(0, 12))
 
         body_frame = ttk.Frame(popup)
         body_frame.grid(row=2, column=0, sticky="nsew", padx=10, pady=(0, 10))
@@ -1125,8 +1151,8 @@ class SemanticSearchApp:
             if is_selected:
                 if context.mode == "chapter":
                     heading = display_value(context_row.get("heading") or context_row.get("outline_path"), "no heading")
-                    row_page = display_value(context_row.get("page_number"), "unknown")
-                    header = f"SELECTED EVIDENCE | {context_row.get('evidence_id')} | p.{row_page} | {heading}\n"
+                    row_page = format_page_locations(context_row)
+                    header = f"SELECTED EVIDENCE | {context_row.get('evidence_id')} | {row_page} | {heading}\n"
                     body.insert(tk.END, header, ("selected_context",))
                     insert_body_text(clean_display_text(context_row.get("verbatim_text")) + "\n")
                     continue
@@ -1137,8 +1163,8 @@ class SemanticSearchApp:
             else:
                 marker = "NEARBY EVIDENCE"
             heading = display_value(context_row.get("heading") or context_row.get("outline_path"), "no heading")
-            row_page = display_value(context_row.get("page_number"), "unknown")
-            header = f"{marker} | {context_row.get('evidence_id')} | p.{row_page} | {heading}\n"
+            row_page = format_page_locations(context_row)
+            header = f"{marker} | {context_row.get('evidence_id')} | {row_page} | {heading}\n"
             body.insert(tk.END, header, ("selected_context",) if is_selected else ("nearby_context",))
             insert_body_text(clean_display_text(context_row.get("verbatim_text")) + "\n\n")
         body.configure(state="disabled")

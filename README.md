@@ -593,3 +593,37 @@ versioned filename.
 Do not manually edit the SQLite database to correct KB attribution or metadata.
 Fix the source KB or its builder, rebuild the affected KB data, and then rebuild
 the search index.
+## Explicit page locations
+
+Displayed names are **PDF file page**, **Header/footer page**, and **Printed book
+reference** (pluralized for multiple values). The KB and index manifests store
+their definitions in `pagination.display_labels`; SQLite stores the same mapping
+in `metadata.pagination_display_labels`. Existing record fields remain compatible.
+For a label-only update, run `pagination.py --labels-only` after refreshing the
+KB's descriptions. This refuses pagination-row rewrites and never rebuilds indexes.
+
+All `page_number` / `page_start` / `page_end` values are 1-based PDF file
+positions. Standard and advanced search responses also expose `page_locations`,
+which keeps Header/footer page numbers and printed book references in the margin
+separate for every page spanned by the evidence. Result cards, explanations,
+context views, and copied context show explicitly labeled numbering systems.
+The context window's **Copy citation** button copies these labels with the author,
+source, heading, and evidence ID.
+Printed book references describe the cited PDF pages; they are not inferred
+pinpoints within a passage. The legacy `printed_page_number(s)` extraction
+fields remain available but are not used as verified display labels.
+
+After updating the KB's pagination, update an existing index without rebuilding:
+
+```powershell
+python .\pagination.py --kb-dir "..\knowledge_base"
+python .\check_index_sync.py
+```
+
+Alternatively, `check_index_sync.py --sync-pagination` installs only pagination
+metadata. The migration requires a compatible existing index, backs it up, and
+never rebuilds evidence, terms, or full-text search tables. Repeating it with the
+same metadata is a no-op. Future intentional `build_index.py` runs import the
+extension automatically. Existing indexes without the extension remain readable
+and show printed numbering as unavailable rather than guessing from legacy data.
+The optional extension has its own schema version and SHA-256 digest.

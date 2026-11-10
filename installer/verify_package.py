@@ -65,6 +65,27 @@ def main() -> int:
         con.execute("SELECT author_norm FROM evidence_mentioned_authors LIMIT 1").fetchone()
         tables = {row[0] for row in con.execute("SELECT name FROM sqlite_master WHERE type = 'table'")}
         con.execute("SELECT evidence_id FROM evidence LIMIT 1").fetchone()
+        pagination = manifest.get("pagination")
+        if pagination:
+            if "page_locations" not in tables:
+                print("Packaged index is missing its pagination extension")
+                return 1
+            for key, field in [("pagination_schema_version", "schema_version"),
+                               ("pagination_sha256", "sha256"), ("pagination_page_count", "page_count")]:
+                if metadata.get(key) != str(pagination.get(field)):
+                    print(f"Packaged pagination mismatch: {key}")
+                    return 1
+            if con.execute("SELECT COUNT(*) FROM page_locations").fetchone()[0] != pagination["page_count"]:
+                print("Packaged pagination page count mismatch")
+                return 1
+            if "display_labels" in pagination:
+                try:
+                    stored_labels = json.loads(metadata.get("pagination_display_labels") or "null")
+                except ValueError:
+                    stored_labels = None
+                if stored_labels != pagination["display_labels"]:
+                    print("Packaged pagination label descriptions mismatch")
+                    return 1
     manifest_version = manifest.get("dataset_version")
     sqlite_version = metadata.get("dataset_version")
     if not manifest_version:

@@ -22,6 +22,7 @@ datas = [
 ]
 
 hiddenimports = [
+    "pagination",
     "common",
     "gui",
     "periods",

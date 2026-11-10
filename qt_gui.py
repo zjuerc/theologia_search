@@ -848,6 +848,22 @@ class PeriodColumn(QtWidgets.QFrame):
         layout.addWidget(scroll, 1)
 
 
+class PageLocationLine(FieldLine):
+    """Keep every citation label visible in the narrow period columns."""
+
+    def resizeEvent(self, event):  # noqa: N802 - Qt override.
+        super().resizeEvent(event)
+        QtCore.QTimer.singleShot(0, self._fit_text)
+
+    def _fit_text(self):
+        value = self.findChild(QtWidgets.QLabel, "FieldValue")
+        if value is not None and value.width() > 0:
+            height = value.heightForWidth(value.width())
+            if height > 0 and value.minimumHeight() != height:
+                value.setMinimumHeight(height)
+                self.updateGeometry()
+
+
 class ResultCard(QtWidgets.QFrame):
     selected = QtCore.Signal(int)
     double_clicked = QtCore.Signal(int)
@@ -896,6 +912,8 @@ class ResultCard(QtWidgets.QFrame):
             details.addWidget(FieldLine("Mentioned", clipped_text(values["Mentioned"], 58), label_width=74, max_value_height=28))
         if values.get("Heading"):
             details.addWidget(FieldLine("Heading", clipped_text(values["Heading"], 76), label_width=74, max_value_height=44))
+        if values.get("Pages"):
+            details.addWidget(PageLocationLine("Pages", values["Pages"], label_width=74))
         details.addWidget(FieldLine("Quality", self._quality_widget(values.get("Quality", "")), label_width=74))
         outer.addLayout(details)
 
@@ -962,7 +980,7 @@ class ContextDialog(QtWidgets.QDialog):
         selected = context.selected
         source_id = core_gui.display_value(selected.get("source_id"), "unknown source")
         evidence_id = core_gui.display_value(selected.get("evidence_id"), "unknown evidence")
-        self.setWindowTitle(f"{source_id} p.{context.page_range} | {evidence_id} | {context.heading}")
+        self.setWindowTitle(f"{source_id} | {core_gui.format_pdf_file_range(context.page_range)} | {evidence_id} | {context.heading}")
         self.resize(980, 720)
         self.setMinimumSize(720, 500)
         self.setStyleSheet(APP_STYLESHEET)
@@ -982,7 +1000,8 @@ class ContextDialog(QtWidgets.QDialog):
             ("Title", core_gui.display_value(selected.get("source_title"), "unknown")),
             ("Author", core_gui.display_value(selected.get("author"), "Unknown")),
             ("Mentioned authors", ", ".join(selected.get("mentioned_authors") or []) or "none"),
-            ("Page range", context.page_range),
+            ("Context page range", core_gui.format_pdf_file_range(context.page_range)),
+            ("Selected evidence pages", core_gui.format_page_locations(selected)),
             ("Evidence", evidence_id),
             ("Heading", context.heading),
             (
@@ -1010,6 +1029,9 @@ class ContextDialog(QtWidgets.QDialog):
         QtCore.QTimer.singleShot(0, self._scroll_to_selected_evidence)
 
         font_controls = QtWidgets.QHBoxLayout()
+        copy_citation = QtWidgets.QPushButton("Copy citation")
+        copy_citation.clicked.connect(lambda: QtWidgets.QApplication.clipboard().setText(core_gui.citation_text(selected)))
+        font_controls.addWidget(copy_citation)
         font_controls.addStretch(1)
         smaller = QtWidgets.QPushButton("A-")
         smaller.setToolTip("Decrease full-text font size")
@@ -1083,8 +1105,8 @@ class ContextDialog(QtWidgets.QDialog):
             is_selected = context_row.get("evidence_id") == selected_id
             if is_selected:
                 heading = core_gui.display_value(context_row.get("heading") or context_row.get("outline_path"), "no heading")
-                page = core_gui.display_value(context_row.get("page_number"), "unknown")
-                header = f"SELECTED EVIDENCE | {context_row.get('evidence_id')} | p.{page} | {heading}\n"
+                page = core_gui.format_page_locations(context_row)
+                header = f"SELECTED EVIDENCE | {context_row.get('evidence_id')} | {page} | {heading}\n"
                 cursor.insertText(header, selected_format)
                 insert_text(core_gui.clean_display_text(context_row.get("verbatim_text")) + "\n")
                 continue
@@ -1092,8 +1114,8 @@ class ContextDialog(QtWidgets.QDialog):
                 insert_text(core_gui.clean_display_text(context_row.get("verbatim_text")) + "\n")
                 continue
             heading = core_gui.display_value(context_row.get("heading") or context_row.get("outline_path"), "no heading")
-            page = core_gui.display_value(context_row.get("page_number"), "unknown")
-            header = f"NEARBY EVIDENCE | {context_row.get('evidence_id')} | p.{page} | {heading}\n"
+            page = core_gui.format_page_locations(context_row)
+            header = f"NEARBY EVIDENCE | {context_row.get('evidence_id')} | {page} | {heading}\n"
             cursor.insertText(header, nearby_format)
             insert_text(core_gui.clean_display_text(context_row.get("verbatim_text")) + "\n\n")
 

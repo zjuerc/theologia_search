@@ -13,6 +13,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 try:
+    from .pagination import install_page_locations
     from . import periods
     from .common import (
         DEFAULT_INDEX_MANIFEST_PATH,
@@ -30,6 +31,7 @@ try:
         write_json,
     )
 except ImportError:  # pragma: no cover - supports direct script execution.
+    from pagination import install_page_locations
     import sys
 
     sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -520,6 +522,7 @@ def build_semantic_index(
                 for term, values in sorted(term_stats.items())
             ],
         )
+        install_page_locations(con, kb_dir, manifest)
         con.commit()
     except Exception:
         con.rollback()
@@ -552,6 +555,8 @@ def build_semantic_index(
             "source_faithful_kb_modified": False,
         },
     }
+    if manifest.get("pagination"):
+        index_manifest["pagination"] = manifest["pagination"]
     write_json(index_manifest_path, index_manifest)
     return index_manifest
 

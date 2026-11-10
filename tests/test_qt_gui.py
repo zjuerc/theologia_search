@@ -20,6 +20,7 @@ class QtGuiVisualTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.app = QtWidgets.QApplication.instance() or QtWidgets.QApplication([])
+        qt_gui.load_project_fonts()
 
     def test_main_buttons_use_complete_separate_artwork(self):
         window = qt_gui.TheologiaSearchWindow()
@@ -53,6 +54,47 @@ class QtGuiVisualTests(unittest.TestCase):
         finally:
             dialog.close()
             window.close()
+
+    def pagination_row(self):
+        return {"source_id": "SOURCE", "source_title": "Example book", "author": "Example author",
+                "evidence_id": "SOURCE_EVID_00022_BODY_01", "page_number": 22, "heading": "Chapter 1",
+                "verbatim_text": "Example evidence.", "quality_label": "strong", "snippet": "Example evidence.",
+                "page_locations": [{"pdf_page_number": 22, "pdf_edition_page_number": "17",
+                                    "pdf_edition_status": "verified", "original_book_page_numbers": ["iii"],
+                                    "original_book_status": "verified"}]}
+
+    def test_result_card_shows_verified_numbering(self):
+        row = self.pagination_row()
+        card = qt_gui.ResultCard(0, row, 1)
+        try:
+            card.setStyleSheet(qt_gui.APP_STYLESHEET)
+            card.setFixedWidth(350)
+            card.show()
+            self.app.processEvents()
+            self.app.processEvents()
+            text = " ".join(label.text() for label in card.findChildren(QtWidgets.QLabel))
+            self.assertIn("PDF file page: 22", text)
+            self.assertIn("Header/footer page: 17", text)
+            self.assertIn("Printed book reference: iii", text)
+            value = card.findChild(qt_gui.PageLocationLine).findChild(QtWidgets.QLabel, "FieldValue")
+            self.assertGreaterEqual(value.height(), value.heightForWidth(value.width()))
+        finally:
+            card.close()
+
+    def test_context_copy_citation_includes_page_systems(self):
+        row = self.pagination_row()
+        context = qt_gui.core_gui.ContextOutput(row, [row], "chapter", "22", "Chapter 1", 0, 0, False, False)
+        dialog = qt_gui.ContextDialog(context)
+        try:
+            button = next(b for b in dialog.findChildren(QtWidgets.QPushButton) if b.text() == "Copy citation")
+            button.click()
+            text = self.app.clipboard().text()
+            self.assertIn("PDF file page: 22", text)
+            self.assertIn("Header/footer page: 17", text)
+            self.assertIn("Printed book reference: iii", text)
+            self.assertIn("SOURCE_EVID_00022_BODY_01", text)
+        finally:
+            dialog.close()
 
 
 if __name__ == "__main__":
